@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowRight, BookOpen, Eye, Fire, Star } from '@phosphor-icons/react';
+import { ArrowRight, BookOpen, Crown, Eye, Fire, Star } from '@phosphor-icons/react';
 import { STORIES, topStories, fullStories, GENRES, genreName } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
 import { CoverArt } from '../components/CoverArt';
@@ -190,23 +190,58 @@ const RankSection = () => (
         <div>
           {topStories.slice(0, 10).map((s, i) => (
             <Reveal key={s.slug} delay={i * 0.04} y={24}>
-              <Link
-                to={`/truyen/${s.slug}`}
-                data-testid={`rank-row-${s.slug}`}
-                className="group flex items-center gap-5 md:gap-8 py-5 border-b border-white/8 hover:bg-gold/[0.04] hover:pl-3 transition-[background-color,padding] duration-300 rounded-lg"
-              >
-                <span className={`font-display text-4xl md:text-5xl font-bold w-14 shrink-0 transition-all duration-300 ${i < 3 ? 'text-gold' : 'text-stroke-faint group-hover:text-gold/70'}`}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="flex-1 min-w-0">
-                  <span className="block font-display text-xl md:text-2xl font-semibold text-bone truncate group-hover:text-gold transition-colors duration-300">{s.title}</span>
-                  <span className="block text-xs text-ash mt-1">{s.genres.map(genreName).join(' · ')} — {s.author}</span>
-                </span>
-                <span className="hidden sm:flex items-center gap-1.5 text-sm text-ash shrink-0">
-                  <Eye size={15} className="text-gold/60" />{s.views}
-                </span>
-                {i < 3 && <Fire size={18} weight="fill" className="text-blood shrink-0 animate-pulse-gold" />}
-              </Link>
+              {i === 0 ? (
+                <Link
+                  to={`/truyen/${s.slug}`}
+                  data-testid={`rank-row-${s.slug}`}
+                  className="group relative flex items-center gap-5 md:gap-7 p-4 md:p-5 mb-4 rounded-2xl border border-gold/40 bg-gradient-to-r from-gold/10 via-coal/70 to-transparent gold-glow overflow-hidden hover:border-gold/70 transition-colors duration-300"
+                >
+                  <motion.span
+                    aria-hidden="true"
+                    initial={{ x: '-120%' }}
+                    animate={{ x: '240%' }}
+                    transition={{ repeat: Infinity, duration: 3, ease: 'linear', repeatDelay: 1.4 }}
+                    className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-gold/15 to-transparent skew-x-12 pointer-events-none"
+                  />
+                  <span className="relative shrink-0 flex flex-col items-center w-14">
+                    <Crown size={20} weight="fill" className="text-gold drop-shadow-[0_0_10px_rgba(34,200,234,0.9)] animate-floaty" />
+                    <span className="font-display text-4xl md:text-5xl font-bold text-gold">01</span>
+                  </span>
+                  <span className="relative w-14 md:w-16 aspect-[3/4] rounded-lg overflow-hidden border border-gold/60 shadow-[0_0_28px_rgba(34,200,234,0.3)] shrink-0 transition-[transform] duration-400 group-hover:scale-105 group-hover:-rotate-2">
+                    <CoverArt story={s} showTitle={false} />
+                  </span>
+                  <span className="relative flex-1 min-w-0">
+                    <span className="block text-[10px] uppercase tracking-[0.35em] text-gold/80 mb-1">Quán quân tuần này</span>
+                    <span className="block font-display text-2xl md:text-3xl font-bold text-gold truncate">{s.title}</span>
+                    <span className="block text-xs text-ash mt-1">{s.genres.map(genreName).join(' · ')} — {s.author}</span>
+                  </span>
+                  <span className="relative hidden sm:flex items-center gap-1.5 text-sm text-gold/90 shrink-0">
+                    <Eye size={15} />{s.views}
+                  </span>
+                  <Fire size={20} weight="fill" className="relative text-blood shrink-0 animate-pulse-gold" />
+                </Link>
+              ) : (
+                <Link
+                  to={`/truyen/${s.slug}`}
+                  data-testid={`rank-row-${s.slug}`}
+                  className="group flex items-center gap-5 md:gap-6 py-4 border-b border-white/8 hover:bg-gold/[0.04] hover:pl-3 transition-[background-color,padding] duration-300 rounded-lg"
+                >
+                  <span className={`font-display text-4xl md:text-5xl font-bold w-14 shrink-0 transition-all duration-300 ${i < 3 ? 'text-gold' : 'text-stroke-faint group-hover:text-gold/70'}`}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span className="relative w-11 md:w-12 aspect-[3/4] rounded-md overflow-hidden border border-white/10 shrink-0 group-hover:border-gold/50 group-hover:shadow-[0_0_18px_rgba(34,200,234,0.25)] transition-[border-color,box-shadow] duration-300">
+                    <CoverArt story={s} showTitle={false} />
+                  </span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block font-display text-xl md:text-2xl font-semibold text-bone truncate group-hover:text-gold transition-colors duration-300">{s.title}</span>
+                    <span className="block text-xs text-ash mt-1">{s.genres.map(genreName).join(' · ')} — {s.author}</span>
+                  </span>
+                  <span className="hidden sm:flex items-center gap-1.5 text-sm text-ash shrink-0">
+                    <Eye size={15} className="text-gold/60" />{s.views}
+                  </span>
+                  {i < 3 && <Fire size={18} weight="fill" className="text-blood shrink-0 animate-pulse-gold" />}
+                </Link>
+              )}
             </Reveal>
           ))}
         </div>
