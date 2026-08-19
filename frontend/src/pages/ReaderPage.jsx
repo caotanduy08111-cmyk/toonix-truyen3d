@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CaretLeft, CaretRight, House, ListBullets, X } from '@phosphor-icons/react';
 import { getStory, paginate } from '../data/stories';
 import { pushHistory } from '../lib/store';
+import { CoverArt } from '../components/CoverArt';
+import { ReaderAmbience } from '../components/ReaderAmbience';
 
 const Page = forwardRef(({ children, right }, ref) => (
   <div ref={ref} className={`book-page ${right ? 'book-page-right' : ''} p-8 md:p-10 flex flex-col`}>
@@ -79,9 +81,19 @@ export default function ReaderPage() {
         <h1 className="font-display text-xl md:text-2xl text-bone/90 italic mt-1">{chapter.title.split(':')[1]?.trim()}</h1>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-2">
-        <div className="book-stage relative w-full max-w-[1160px] h-[68vh] min-h-[520px]">
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[60%] bg-gold/[0.07] blur-[100px] rounded-full pointer-events-none" />
+      <div className="flex-1 flex items-center justify-center px-2 relative">
+        <ReaderAmbience genres={story.genres} />
+        <motion.div
+          key={`${slug}-${chapterNum}`}
+          initial={{ opacity: 0, rotateY: -28, scale: 0.94 }}
+          animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="book-stage relative w-full max-w-[1160px] h-[68vh] min-h-[520px]"
+        >
+          <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[60%] blur-[100px] rounded-full pointer-events-none"
+            style={{ background: `hsl(${story.hue} 80% 55% / 0.13)` }}
+          />
           <HTMLFlipBook
             ref={bookRef}
             width={520}
@@ -100,13 +112,19 @@ export default function ReaderPage() {
             onFlip={(e) => setPageIdx(e.data)}
             data-testid="flip-book"
           >
-            <div className="book-cover-page">
-              <p className="text-[10px] uppercase tracking-[0.5em] text-gold/70 mb-5">TOONIX</p>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-bone leading-tight">{story.title}</h2>
-              <p className="font-display italic text-gold mt-4 text-lg">{chapter.title}</p>
-              <div className="w-14 h-px bg-gold/50 my-6" />
-              <p className="text-xs text-ash tracking-widest uppercase">{story.author}</p>
-              <p className="absolute bottom-6 text-[10px] text-ash/70 uppercase tracking-[0.3em] animate-pulse-gold">Lật trang để bắt đầu →</p>
+            <div className="book-cover-page relative overflow-hidden">
+              {story.img ? (
+                <img src={story.img} alt={story.title} className="absolute inset-0 w-full h-full object-cover" />
+              ) : (
+                <CoverArt story={story} showTitle={false} />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/30" />
+              <p className="relative text-[10px] uppercase tracking-[0.5em] text-gold mb-5 drop-shadow">TOONIX</p>
+              <h2 className="relative font-display text-3xl md:text-4xl font-bold text-bone leading-tight drop-shadow-lg">{story.title}</h2>
+              <p className="relative font-display italic text-gold mt-4 text-lg drop-shadow">{chapter.title}</p>
+              <div className="relative w-14 h-px bg-gold/50 my-6" />
+              <p className="relative text-xs text-bone/70 tracking-widest uppercase drop-shadow">{story.author}</p>
+              <p className="absolute bottom-6 text-[10px] text-bone/60 uppercase tracking-[0.3em] animate-pulse-gold">Lật trang để bắt đầu →</p>
             </div>
             {pages.map((paras, i) => (
               <Page key={i} right={i % 2 === 0}>
@@ -138,7 +156,7 @@ export default function ReaderPage() {
               </div>
             </div>
           </HTMLFlipBook>
-        </div>
+        </motion.div>
       </div>
 
       <div className="flex items-center justify-center gap-4 mt-4">

@@ -16,6 +16,7 @@
 - Design: Dark Cinematic Fantasy — obsidian #050505, gold #D4AF37, blood #8A1C1C; Cormorant Garamond (headings) + Manrope (body); grain overlay toàn site
 
 ## Đã triển khai (19/08/2026)
+- Trang đọc: bìa sách 3D hiển thị ảnh bìa thật của truyện; ReaderAmbience — hiệu ứng không khí theo thể loại (tiên/kiếm hiệp: luồng kiếm khí bay lên, huyền huyễn: hạt lấp lánh, kinh dị: sương đỏ trôi, đô thị: mưa neon rơi, khoa huyễn: bụi sao, lãng mạn: cánh hoa hồng rơi, hài hước: bong bóng bay); sách mở vào với hiệu ứng xoay 3D + hào quang màu theo hue truyện
 - Bảng xếp hạng trang chủ: mỗi hàng có ảnh bìa thu nhỏ; Top 1 là thẻ "quán quân" riêng — vương miện bay, bìa lớn phát sáng, viền cyan, tia sáng quét ngang lặp vô hạn
 - LinkCard dùng chung (/src/components/LinkCard.jsx): thẻ icon mũi tên phát sáng nối trang — dạng tile ở Kiệt tác/Mới cập nhật/dải Thể loại, dạng bar ngang dưới Bảng xếp hạng
 - REBRAND: Logo TOONIX (chuyển từ file .ai → PNG nền trong suốt, /public/logo.png) thay logo cũ ở Navbar/Footer/trang đọc; title tab = "TOONIX — Infinite Story Universe"
