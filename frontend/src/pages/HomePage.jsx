@@ -28,11 +28,8 @@ const Hero = () => {
     return () => window.removeEventListener('mousemove', move);
   }, [mx, my]);
 
-  const lines = [
-    { text: 'BƯỚC VÀO', cls: 'text-bone' },
-    { text: 'THẾ GIỚI', cls: 'text-stroke-gold' },
-    { text: 'TOONIX', cls: 'text-gold italic' },
-  ];
+  const logoRx = useSpring(useTransform(my, [-0.5, 0.5], [9, -9]), { stiffness: 60, damping: 15 });
+  const logoRy = useSpring(useTransform(mx, [-0.5, 0.5], [-13, 13]), { stiffness: 60, damping: 15 });
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden" data-testid="hero-section">
@@ -47,20 +44,25 @@ const Hero = () => {
           Thư viện truyện 3D số một
         </motion.p>
 
-        <h1 className="font-display font-bold leading-[0.95] text-[15vw] md:text-[8.5rem] lg:text-[10rem] select-none">
-          {lines.map((l, i) => (
-            <span key={l.text} className="block overflow-hidden pb-1">
-              <motion.span
-                initial={{ y: '112%' }}
-                animate={{ y: 0 }}
-                transition={{ delay: 0.3 + i * 0.14, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className={`block ${l.cls}`}
-              >
-                {l.text}
-              </motion.span>
-            </span>
-          ))}
-        </h1>
+        <div style={{ perspective: 1400 }} className="select-none">
+          <motion.div
+            initial={{ opacity: 0, y: 90, rotateX: 38 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ delay: 0.35, duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
+            style={{ rotateX: logoRx, rotateY: logoRy, transformStyle: 'preserve-3d' }}
+            className="relative w-fit"
+          >
+            <motion.img
+              src="/logo.png"
+              alt="TOONIX — Infinite Story Universe"
+              data-testid="hero-logo"
+              animate={{ y: [0, -14, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-[80vw] max-w-[620px] h-auto drop-shadow-[0_0_45px_rgba(34,200,234,0.45)]"
+            />
+            <div className="absolute -inset-12 bg-[radial-gradient(closest-side,rgba(34,200,234,0.22),transparent)] blur-2xl -z-10 animate-pulse-gold" />
+          </motion.div>
+        </div>
 
         <motion.p
           initial={{ opacity: 0, y: 24 }}

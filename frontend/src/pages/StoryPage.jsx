@@ -63,7 +63,33 @@ export default function StoryPage() {
   };
 
   return (
-    <div data-testid="story-page" className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-28 md:pt-36 pb-10">
+    <div data-testid="story-page" className="relative z-10 pt-16 md:pt-[72px] pb-10">
+      <div className="relative h-[280px] md:h-[400px] overflow-hidden" data-testid="story-banner">
+        {story.img ? (
+          <motion.img
+            src={story.img}
+            alt=""
+            animate={{ scale: [1.16, 1.28, 1.16] }}
+            transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute inset-0 w-full h-full object-cover blur-[3px] brightness-[0.6]"
+          />
+        ) : (
+          <div className="absolute inset-0 blur-[2px] brightness-[0.65] scale-110"><CoverArt story={story} showTitle={false} /></div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-obsidian/70 via-obsidian/25 to-obsidian" />
+        <div className="absolute inset-0 bg-gradient-to-r from-obsidian/70 via-transparent to-obsidian/70" />
+        <div className="absolute bottom-0 inset-x-0 max-w-[1440px] mx-auto px-5 md:px-10 overflow-hidden">
+          <motion.p
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-[11vw] md:text-[6.5rem] leading-[0.9] font-bold text-white/[0.08] select-none whitespace-nowrap"
+          >
+            {story.title}
+          </motion.p>
+        </div>
+      </div>
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 -mt-24 md:-mt-36 relative z-10">
       <div className="grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-20">
         <Reveal>
           <TiltCover story={story} />
@@ -156,6 +182,7 @@ export default function StoryPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

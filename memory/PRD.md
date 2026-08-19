@@ -17,6 +17,8 @@
 
 ## Đã triển khai (19/08/2026)
 - REBRAND: Logo TOONIX (chuyển từ file .ai → PNG nền trong suốt, /public/logo.png) thay logo cũ ở Navbar/Footer/trang đọc; title tab = "TOONIX — Infinite Story Universe"
+- Hero trang chủ: logo TOONIX lớn phát sáng làm tâm điểm, xoay 3D theo chuột (rotateX/rotateY springs) + float nhịp nhàng + hào quang cyan
+- Trang truyện: banner ngang đầu trang từ chính ảnh bìa (blur + ken-burns zoom chậm 26s + gradient fade), tên truyện khổng lồ mờ nền, bìa truyện xếp chồm lên banner
 - Đổi toàn bộ tone màu sang bảng màu người dùng: nền #020817, surface #121C38, border #1E2C50, chữ #EEF4FF/#93A4C9, accent cyan #22C8EA/#4DD8F0, xanh #4891E7, sao đánh giá vàng #F8C93A, danger #E0554A
 - 20 ảnh bìa thật do người dùng cung cấp (Iruma, Hóa Thân Thành Mèo, Frieren, Hội Pháp Sư, One Piece, Naruto, Blue Lock, Ragnarok, Mashle, Gakuen Babysitters, Một Đêm Không Bóng, Công Chúa Bị Bỏ Rơi, Tôi Không Phải Ấn Tượng Hơn, Lần Nữa Tỏa Sáng, Hiệp Sĩ Hoa Băng, Kotaro, Bảo Mẫu Xác Ướp, Thể Thao Cực Hạn, Bong Bóng Sóng Biển, Mr Devourer) trong /public/covers
 - 20 truyện mới có nội dung riêng: tên 4 chương + đoạn mở đầu chương 1 viết riêng theo cốt truyện (/src/data/content.js), CoverArt hỗ trợ ảnh thật
