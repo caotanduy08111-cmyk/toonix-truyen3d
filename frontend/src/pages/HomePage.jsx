@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRight, BookOpen, Crown, Eye, Fire, Star } from '@phosphor-icons/react';
-import { STORIES, topStories, fullStories, GENRES, genreName } from '../data/stories';
+import { STORIES, topStories, fullStories, GENRES, genreName, byGenre } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
 import { CoverArt } from '../components/CoverArt';
 import { Marquee } from '../components/Marquee';
@@ -292,10 +292,16 @@ const GenreStrip = () => (
             className="group relative block w-[240px] md:w-[280px] h-[340px] rounded-2xl overflow-hidden border border-white/10 hover:border-gold/40 transition-colors duration-400"
           >
             <div className="absolute inset-0 bg-coal" />
-            <span className="absolute -right-6 -bottom-10 font-display text-[11rem] leading-none font-bold text-white/[0.04] group-hover:text-gold/10 transition-colors duration-500 select-none">
+            {byGenre(g.slug)[0] && (
+              <div className="absolute inset-0 overflow-hidden opacity-25 blur-[2px] saturate-[0.7] group-hover:opacity-50 group-hover:blur-0 group-hover:saturate-100 group-hover:scale-105 transition-[opacity,filter,transform] duration-700">
+                <CoverArt story={byGenre(g.slug)[0]} showTitle={false} />
+              </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-obsidian/20" />
+            <span className="absolute -right-6 -bottom-10 font-display text-[11rem] leading-none font-bold text-white/[0.05] group-hover:text-gold/15 transition-colors duration-500 select-none">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6">
               <h3 className="font-display text-3xl font-semibold text-bone group-hover:text-gold transition-colors duration-300">{g.name}</h3>
               <p className="text-sm text-ash mt-2 leading-relaxed">{g.desc}</p>
