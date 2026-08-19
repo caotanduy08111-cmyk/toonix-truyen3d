@@ -166,11 +166,25 @@ const UpdatedSection = () => (
   <section className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 py-24 md:py-32" data-testid="updated-section">
     <Reveal><SectionHeading kicker="Mới cập nhật" title="Chương mới mỗi giờ" link="/truyen-cap-nhat" /></Reveal>
     <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6">
-      {STORIES.slice(0, 6).map((s, i) => (
+      {STORIES.slice(0, 5).map((s, i) => (
         <Reveal key={s.slug} delay={i * 0.06}>
           <StoryCard story={s} />
         </Reveal>
       ))}
+      <Reveal delay={0.3}>
+        <Link
+          to="/truyen-cap-nhat"
+          data-testid="updated-view-all-card"
+          className="group relative flex flex-col items-center justify-center aspect-[3/4] rounded-2xl border border-dashed border-gold/30 hover:border-gold/70 bg-coal/40 overflow-hidden transition-colors duration-400"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(34,200,234,0.12),transparent_65%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <span className="relative w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold/10 border border-gold/50 flex items-center justify-center text-gold transition-[transform,background-color,color,box-shadow] duration-400 group-hover:scale-110 group-hover:bg-gold group-hover:text-obsidian group-hover:shadow-[0_0_40px_rgba(34,200,234,0.5)]">
+            <ArrowRight size={28} weight="bold" className="transition-transform duration-400 group-hover:translate-x-1" />
+          </span>
+          <span className="relative mt-6 text-xs uppercase tracking-[0.3em] text-ash group-hover:text-gold transition-colors duration-300">Xem tất cả</span>
+          <span className="relative mt-2 text-[10px] uppercase tracking-[0.2em] text-ash/60">{STORIES.length}+ bộ truyện</span>
+        </Link>
+      </Reveal>
     </div>
   </section>
 );
