@@ -7,9 +7,20 @@ import { getStory, paginate } from '../data/stories';
 import { pushHistory } from '../lib/store';
 import { CoverArt } from '../components/CoverArt';
 import { ReaderAmbience } from '../components/ReaderAmbience';
+import { FlipBurst } from '../components/FlipBurst';
+import { getTheme } from '../lib/readerTheme';
+import { PANELS } from '../data/panels';
 
-const Page = forwardRef(({ children, right }, ref) => (
-  <div ref={ref} className={`book-page ${right ? 'book-page-right' : ''} p-8 md:p-10 flex flex-col`}>
+const clipText = (t, max = 220) => {
+  if (!t) return '';
+  return t.length > max ? t.slice(0, max).replace(/\s+\S*$/, '') + '…' : t;
+};
+
+const Page = forwardRef(({ children, right, themeKey }, ref) => (
+  <div
+    ref={ref}
+    className={`book-page ${right ? 'book-page-right' : ''} paper-${themeKey || 'huyen-huyen'} p-8 md:p-10 flex flex-col`}
+  >
     {children}
   </div>
 ));
@@ -22,12 +33,20 @@ export default function ReaderPage() {
   const bookRef = useRef(null);
   const [pageIdx, setPageIdx] = useState(0);
   const [tocOpen, setTocOpen] = useState(false);
+  const [burst, setBurst] = useState(null);
 
   const chapterNum = Math.min(Math.max(parseInt(num || '1', 10) || 1, 1), story ? story.chapters.length : 1);
   const chapter = story?.chapters[chapterNum - 1];
 
-  const pages = useMemo(() => (chapter ? paginate(chapter.paras, 3) : []), [chapter]);
-  const totalPages = pages.length + 2;
+  const pages = useMemo(() => {
+    if (!chapter) return [];
+    return [
+      { paras: chapter.paras.slice(0, 2), figure: true },
+      ...paginate(chapter.paras.slice(2), 3).map((paras) => ({ paras })),
+    ];
+  }, [chapter]);
+  const panels = PANELS[slug];
+  const totalPages = panels ? panels.length + 2 : pages.length + 3;
 
   useEffect(() => {
     if (story) pushHistory(story.slug, chapterNum);
@@ -109,7 +128,12 @@ export default function ReaderPage() {
             maxShadowOpacity={0.55}
             mobileScrollSupport
             className="mx-auto"
-            onFlip={(e) => setPageIdx(e.data)}
+            onFlip={(e) => {
+              setPageIdx((prev) => {
+                if (e.data !== prev) setBurst({ id: Date.now(), dir: e.data > prev ? 1 : -1 });
+                return e.data;
+              });
+            }}
             data-testid="flip-book"
           >
             <div className="book-cover-page relative overflow-hidden">
@@ -126,17 +150,76 @@ export default function ReaderPage() {
               <p className="relative text-xs text-bone/70 tracking-widest uppercase drop-shadow">{story.author}</p>
               <p className="absolute bottom-6 text-[10px] text-bone/60 uppercase tracking-[0.3em] animate-pulse-gold">Lật trang để bắt đầu →</p>
             </div>
-            {pages.map((paras, i) => (
-              <Page key={i} right={i % 2 === 0}>
-                <div className="reader-serif flex-1">
-                  {paras.map((p, j) => <p key={j}>{p}</p>)}
-                </div>
-                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-ash/70 pt-3 border-t border-white/5">
-                  <span>{story.title}</span>
-                  <span className="text-gold/60">Trang {i + 1} / {pages.length}</span>
-                </div>
-              </Page>
-            ))}
+            {panels ? (
+              panels.map((src, i) => (
+                <Page key={i} themeKey={story.genres[0]}>
+                  <div className="absolute inset-3 md:inset-4 rounded-lg overflow-hidden border border-white/15">
+                    <motion.img
+                      src={src}
+                      alt={`${story.title} — trang tranh ${i + 1}`}
+                      animate={{ scale: [1, 1.06, 1] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="cloud-bubble top-5 left-5 max-w-[46%] md:max-w-[230px]" data-testid={`cloud-top-${i}`}>
+                      {clipText(chapter.paras[(i * 2) % chapter.paras.length], 110)}
+                    </div>
+                    {chapter.paras.length > 1 && (
+                      <div className="cloud-bubble bottom-7 right-5 max-w-[46%] md:max-w-[230px]" data-testid={`cloud-bottom-${i}`}>
+                        {clipText(chapter.paras[(i * 2 + 1) % chapter.paras.length], 110)}
+                      </div>
+                    )}
+                  </div>
+                  <span className="absolute bottom-1.5 right-6 z-10 text-[10px] uppercase tracking-[0.3em] text-bone/80 drop-shadow">
+                    Trang {i + 1} / {panels.length}
+                  </span>
+                </Page>
+              ))
+            ) : ([
+                <Page key="illo" themeKey={story.genres[0]}>
+                  <div className="absolute inset-8 rounded-xl overflow-hidden border border-white/15">
+                    {story.img ? (
+                      <motion.img
+                        src={story.img}
+                        alt={story.title}
+                        animate={{ scale: [1, 1.08, 1] }}
+                        transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    ) : (
+                      <CoverArt story={story} showTitle={false} />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/20" />
+                    <p className="absolute bottom-4 inset-x-0 text-center font-display italic text-lg text-bone drop-shadow-lg">“{chapter.title}”</p>
+                  </div>
+                  <div className="absolute bottom-2 inset-x-8 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-ash/70">
+                    <span>Minh họa</span>
+                    <span className="text-gold/60">{story.author}</span>
+                  </div>
+                </Page>,
+                ...pages.map((pg, i) => (
+                  <Page key={i} right={i % 2 === 0} themeKey={story.genres[0]}>
+                    {pg.figure && (
+                      <figure className="relative h-36 md:h-44 rounded-xl overflow-hidden border border-white/15 mb-5 shrink-0">
+                        {story.img ? (
+                          <img src={story.img} alt={story.title} className="absolute inset-0 w-full h-full object-cover object-top" />
+                        ) : (
+                          <CoverArt story={story} showTitle={false} />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <figcaption className="absolute bottom-2 left-3 text-[10px] uppercase tracking-[0.3em] text-bone/90 drop-shadow">Minh họa — {story.title}</figcaption>
+                      </figure>
+                    )}
+                    <div className="reader-serif flex-1" style={{ '--reader-text': getTheme(story.genres).paper.text, '--reader-accent': getTheme(story.genres).paper.accent }}>
+                      {pg.paras.map((p, j) => <p key={j}>{p}</p>)}
+                    </div>
+                    <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-ash/70 pt-3 border-t border-white/5">
+                      <span>{story.title}</span>
+                      <span className="text-gold/60">Trang {i + 1} / {pages.length}</span>
+                    </div>
+                  </Page>
+                ))
+            ])}
             <div className="book-cover-page">
               <p className="font-display italic text-3xl text-gold">Hết chương</p>
               <p className="text-sm text-ash mt-4 max-w-[240px]">Câu chuyện còn tiếp diễn. Hãy đón đọc chương tiếp theo.</p>
@@ -156,6 +239,7 @@ export default function ReaderPage() {
               </div>
             </div>
           </HTMLFlipBook>
+          <FlipBurst burst={burst} kind={getTheme(story.genres).kind} />
         </motion.div>
       </div>
 

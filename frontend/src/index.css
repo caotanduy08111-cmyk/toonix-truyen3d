@@ -1,3 +1,50 @@
+.paper-tien-hiep { background: linear-gradient(105deg,#0a1420 0%,#102033 55%,#0a1420 100%) !important; border-color: rgba(34,200,234,0.3) !important; }
+.paper-kiem-hiep { background: linear-gradient(105deg,#10141a 0%,#18202b 55%,#10141a 100%) !important; border-color: rgba(238,244,255,0.25) !important; }
+.paper-huyen-huyen { background: linear-gradient(105deg,#120e1c 0%,#1b1330 55%,#120e1c 100%) !important; border-color: rgba(167,139,250,0.3) !important; }
+.paper-kinh-di { background: linear-gradient(105deg,#170c0e 0%,#221013 55%,#170c0e 100%) !important; border-color: rgba(224,85,74,0.35) !important; }
+.paper-do-thi { background: linear-gradient(105deg,#0c1420 0%,#132232 55%,#0c1420 100%) !important; border-color: rgba(72,145,231,0.3) !important; }
+.paper-khoa-huyen { background: linear-gradient(105deg,#081420 0%,#0e1f30 55%,#081420 100%) !important; border-color: rgba(77,216,240,0.3) !important; }
+.paper-lang-man { background: linear-gradient(105deg,#1a1016 0%,#261420 55%,#1a1016 100%) !important; border-color: rgba(244,114,182,0.3) !important; }
+.paper-hai-huoc { background: linear-gradient(105deg,#171208 0%,#221b0d 55%,#171208 100%) !important; border-color: rgba(248,201,58,0.3) !important; }
+
+/* Cloud speech bubble for comic pages */
+.cloud-bubble {
+    position: absolute;
+    background: #fdfbf4;
+    color: #16203a;
+    border-radius: 999px;
+    padding: 0.5rem 0.95rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(2, 8, 23, 0.45);
+    z-index: 5;
+}
+.cloud-bubble::before,
+.cloud-bubble::after {
+    content: '';
+    position: absolute;
+    background: #fdfbf4;
+    border-radius: 50%;
+    z-index: -1;
+}
+.cloud-bubble::before {
+    width: 30px;
+    height: 30px;
+    top: -10px;
+    left: 18px;
+    box-shadow: 18px -6px 0 -6px #fdfbf4;
+}
+.cloud-bubble::after {
+    width: 18px;
+    height: 18px;
+    bottom: -13px;
+    right: 24px;
+    box-shadow: -11px 11px 0 -5px #fdfbf4;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
@@ -154,14 +201,14 @@ body {
     line-height: 1.85;
     text-align: justify;
     margin-bottom: 1.1em;
-    color: #DCE6FA;
+    color: var(--reader-text, #DCE6FA);
 }
 .reader-serif p:first-of-type::first-letter {
     font-size: 3.2em;
     float: left;
     line-height: 0.85;
     padding-right: 0.12em;
-    color: #22C8EA;
+    color: var(--reader-accent, #22C8EA);
     font-weight: 600;
 }
 
