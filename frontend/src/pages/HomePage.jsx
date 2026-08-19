@@ -6,6 +6,7 @@ import { STORIES, topStories, fullStories, GENRES, genreName } from '../data/sto
 import { StoryCard } from '../components/StoryCard';
 import { CoverArt } from '../components/CoverArt';
 import { Marquee } from '../components/Marquee';
+import { LightningIntro } from '../components/LightningIntro';
 import { Reveal, SectionHeading } from '../components/Reveal';
 
 const Hero = () => {
@@ -292,6 +293,7 @@ const Manifesto = () => (
 export default function HomePage() {
   return (
     <div data-testid="home-page">
+      <LightningIntro />
       <Hero />
       <Marquee items={['Tiên Hiệp', 'Kiếm Hiệp', 'Huyền Huyễn', 'Đô Thị', 'Khoa Huyễn', 'Kinh Dị', 'Lãng Mạn', 'Hài Hước']} />
       <FeaturedGrid />
