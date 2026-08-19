@@ -6,6 +6,7 @@ import { STORIES, topStories, fullStories, GENRES, genreName } from '../data/sto
 import { StoryCard } from '../components/StoryCard';
 import { CoverArt } from '../components/CoverArt';
 import { Marquee } from '../components/Marquee';
+import { LinkCard } from '../components/LinkCard';
 import { LightningIntro } from '../components/LightningIntro';
 import { Reveal, SectionHeading } from '../components/Reveal';
 
@@ -156,7 +157,10 @@ const FeaturedGrid = () => {
         <Reveal delay={0.08} className="col-span-1 md:col-span-4"><StoryCard story={feats[1]} /></Reveal>
         <Reveal delay={0.16} className="col-span-1 md:col-span-3"><StoryCard story={feats[2]} /></Reveal>
         <Reveal delay={0.12} className="col-span-1 md:col-span-3"><StoryCard story={feats[3]} /></Reveal>
-        <Reveal delay={0.2} className="col-span-1 md:col-span-4"><StoryCard story={feats[4]} /></Reveal>
+        <Reveal delay={0.2} className="col-span-1 md:col-span-2"><StoryCard story={feats[4]} /></Reveal>
+        <Reveal delay={0.26} className="col-span-2 md:col-span-2">
+          <LinkCard to="/danh-sach" label="Khám phá thêm" sub={`${STORIES.length}+ bộ truyện`} testid="featured-view-all-card" />
+        </Reveal>
       </div>
     </section>
   );
@@ -172,18 +176,7 @@ const UpdatedSection = () => (
         </Reveal>
       ))}
       <Reveal delay={0.3}>
-        <Link
-          to="/truyen-cap-nhat"
-          data-testid="updated-view-all-card"
-          className="group relative flex flex-col items-center justify-center aspect-[3/4] rounded-2xl border border-dashed border-gold/30 hover:border-gold/70 bg-coal/40 overflow-hidden transition-colors duration-400"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(34,200,234,0.12),transparent_65%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <span className="relative w-16 h-16 md:w-20 md:h-20 rounded-full bg-gold/10 border border-gold/50 flex items-center justify-center text-gold transition-[transform,background-color,color,box-shadow] duration-400 group-hover:scale-110 group-hover:bg-gold group-hover:text-obsidian group-hover:shadow-[0_0_40px_rgba(34,200,234,0.5)]">
-            <ArrowRight size={28} weight="bold" className="transition-transform duration-400 group-hover:translate-x-1" />
-          </span>
-          <span className="relative mt-6 text-xs uppercase tracking-[0.3em] text-ash group-hover:text-gold transition-colors duration-300">Xem tất cả</span>
-          <span className="relative mt-2 text-[10px] uppercase tracking-[0.2em] text-ash/60">{STORIES.length}+ bộ truyện</span>
-        </Link>
+        <LinkCard to="/truyen-cap-nhat" label="Xem tất cả" sub={`${STORIES.length}+ bộ truyện`} testid="updated-view-all-card" />
       </Reveal>
     </div>
   </section>
@@ -217,6 +210,9 @@ const RankSection = () => (
             </Reveal>
           ))}
         </div>
+        <Reveal delay={0.2} y={20}>
+          <LinkCard layout="bar" to="/top" label="Xem đầy đủ bảng xếp hạng" sub={`Top ${topStories.length} bộ truyện`} testid="rank-view-all-card" className="mt-8" />
+        </Reveal>
       </div>
       <div>
         <Reveal delay={0.15}>
@@ -275,6 +271,9 @@ const GenreStrip = () => (
           </Link>
         </Reveal>
       ))}
+      <Reveal delay={0.4} className="snap-start shrink-0">
+        <LinkCard to="/the-loai" label="Tất cả thể loại" sub={`${GENRES.length} cõi mơ`} testid="genre-view-all-card" className="w-[240px] md:w-[280px] h-[340px] aspect-auto" />
+      </Reveal>
     </div>
   </section>
 );

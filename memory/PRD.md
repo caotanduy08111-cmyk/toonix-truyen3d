@@ -16,6 +16,7 @@
 - Design: Dark Cinematic Fantasy — obsidian #050505, gold #D4AF37, blood #8A1C1C; Cormorant Garamond (headings) + Manrope (body); grain overlay toàn site
 
 ## Đã triển khai (19/08/2026)
+- LinkCard dùng chung (/src/components/LinkCard.jsx): thẻ icon mũi tên phát sáng nối trang — dạng tile ở Kiệt tác/Mới cập nhật/dải Thể loại, dạng bar ngang dưới Bảng xếp hạng
 - REBRAND: Logo TOONIX (chuyển từ file .ai → PNG nền trong suốt, /public/logo.png) thay logo cũ ở Navbar/Footer/trang đọc; title tab = "TOONIX — Infinite Story Universe"
 - Hero trang chủ: logo TOONIX lớn phát sáng làm tâm điểm, xoay 3D theo chuột (rotateX/rotateY springs) + float nhịp nhàng + hào quang cyan
 - LightningIntro (/src/components/LightningIntro.jsx): intro 2.6s khi mở trang chủ lần đầu mỗi session — logo TOONIX flicker điện + 4 tia sét cyan SVG (pathLength animation, lặp 3 lần) đánh qua chữ + flash nền, chạm để bỏ qua, lưu sessionStorage
