@@ -71,7 +71,7 @@ export default function StoryPage() {
             <Link
               to={`/doc/${story.slug}/1`}
               data-testid="read-from-start-btn"
-              className="flex-1 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:shadow-[0_0_35px_rgba(212,175,55,0.45)] transition-shadow duration-300"
+              className="flex-1 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:shadow-[0_0_35px_rgba(34,200,234,0.45)] transition-shadow duration-300"
             >
               <BookOpen size={15} weight="bold" /> Đọc từ đầu
             </Link>
@@ -104,7 +104,7 @@ export default function StoryPage() {
             </p>
             <div className="flex flex-wrap gap-7 mt-7 text-sm text-ash">
               <span className="flex items-center gap-2"><Eye size={16} className="text-gold/70" />{story.views} lượt đọc</span>
-              <span className="flex items-center gap-2"><Star size={16} weight="fill" className="text-gold" />{story.rating}/5</span>
+              <span className="flex items-center gap-2"><Star size={16} weight="fill" className="text-[#F8C93A]" />{story.rating}/5</span>
               <span className="flex items-center gap-2"><ListBullets size={16} className="text-gold/70" />{story.chaptersCount} chương</span>
               <span className="flex items-center gap-2"><Clock size={16} className="text-gold/70" />{story.updated}</span>
             </div>

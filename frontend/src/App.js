@@ -81,7 +81,7 @@ function App() {
           <BackgroundFX />
           <div className="grain-overlay" />
           <AnimatedRoutes />
-          <Toaster theme="dark" position="bottom-right" toastOptions={{ style: { background: '#141310', border: '1px solid rgba(212,175,55,0.3)', color: '#EAEAEA' } }} />
+          <Toaster theme="dark" position="bottom-right" toastOptions={{ style: { background: '#121C38', border: '1px solid rgba(34,200,234,0.3)', color: '#EEF4FF' } }} />
         </LenisProvider>
       </BrowserRouter>
     </div>

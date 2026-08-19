@@ -12,15 +12,15 @@ module.exports = {
         body: ['Manrope', 'sans-serif'],
       },
       colors: {
-        obsidian: '#050505',
-        coal: '#0F0F11',
+        obsidian: '#020817',
+        coal: '#121C38',
         gold: {
-          DEFAULT: '#D4AF37',
-          dim: '#9A7B2D',
+          DEFAULT: '#22C8EA',
+          dim: '#1A9AB5',
         },
-        blood: '#8A1C1C',
-        bone: '#EAEAEA',
-        ash: '#A0A0A0',
+        blood: '#E0554A',
+        bone: '#EEF4FF',
+        ash: '#93A4C9',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

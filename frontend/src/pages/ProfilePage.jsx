@@ -28,7 +28,7 @@ export default function ProfilePage() {
           <h1 className="font-display text-3xl md:text-4xl font-bold text-bone mt-7">Hồ sơ của bạn</h1>
           <p className="text-sm text-ash mt-3 leading-relaxed">Đăng nhập để lưu truyện yêu thích và theo dõi hành trình đọc của riêng bạn.</p>
           <div className="flex gap-3 mt-8">
-            <Link to="/dang-nhap" data-testid="profile-login-btn" className="flex-1 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_30px_rgba(212,175,55,0.45)] transition-shadow text-center">Đăng nhập</Link>
+            <Link to="/dang-nhap" data-testid="profile-login-btn" className="flex-1 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_30px_rgba(34,200,234,0.45)] transition-shadow text-center">Đăng nhập</Link>
             <Link to="/dang-ky" data-testid="profile-register-btn" className="flex-1 py-3.5 rounded-full border border-white/20 text-bone text-xs font-bold uppercase tracking-wider hover:border-gold/60 hover:text-gold transition-colors text-center">Đăng ký</Link>
           </div>
         </div>
@@ -121,7 +121,7 @@ export default function ProfilePage() {
                     <Link to={`/truyen/${s.slug}`} className="font-display text-xl font-semibold text-bone hover:text-gold transition-colors">{s.title}</Link>
                     <p className="text-xs text-ash mt-1">Đang đọc chương {h.chapter} / {s.chaptersCount}</p>
                   </div>
-                  <Link to={`/doc/${s.slug}/${h.chapter}`} data-testid={`profile-resume-${s.slug}`} className="px-6 py-2.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] transition-shadow shrink-0">
+                  <Link to={`/doc/${s.slug}/${h.chapter}`} data-testid={`profile-resume-${s.slug}`} className="px-6 py-2.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_25px_rgba(34,200,234,0.4)] transition-shadow shrink-0">
                     Đọc tiếp
                   </Link>
                 </div>

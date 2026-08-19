@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MagnifyingGlass, List, X, User, BookOpen } from '@phosphor-icons/react';
+import { MagnifyingGlass, List, X, User } from '@phosphor-icons/react';
 import { STORIES } from '../data/stories';
 import { getUser } from '../lib/store';
 
@@ -35,13 +35,8 @@ export const Navbar = () => {
     <>
       <header className="fixed top-0 inset-x-0 z-50 glass border-x-0 border-t-0">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 h-16 md:h-[72px] flex items-center justify-between gap-4">
-          <Link to="/" data-testid="nav-logo" className="flex items-center gap-2.5 shrink-0">
-            <span className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/40 flex items-center justify-center">
-              <BookOpen size={18} weight="duotone" className="text-gold" />
-            </span>
-            <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-bone">
-              HUYỄN<span className="text-gold italic">CẢNH</span>
-            </span>
+          <Link to="/" data-testid="nav-logo" className="flex items-center shrink-0">
+            <img src="/logo.png" alt="TOONIX" className="h-10 md:h-11 w-auto drop-shadow-[0_0_16px_rgba(34,200,234,0.45)]" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-7" data-testid="nav-menu">
@@ -74,7 +69,7 @@ export const Navbar = () => {
                 <span className="text-xs font-semibold hidden sm:block">{user.name}</span>
               </Link>
             ) : (
-              <Link to="/dang-nhap" data-testid="nav-login-btn" className="h-10 px-4 md:px-5 rounded-full bg-gold text-obsidian text-[13px] font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-[#e8c55a] hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] transition-[background-color,box-shadow] duration-300">
+              <Link to="/dang-nhap" data-testid="nav-login-btn" className="h-10 px-4 md:px-5 rounded-full bg-gold text-obsidian text-[13px] font-bold uppercase tracking-wider flex items-center gap-2 hover:bg-[#e8c55a] hover:shadow-[0_0_25px_rgba(34,200,234,0.4)] transition-[background-color,box-shadow] duration-300">
                 <User size={15} weight="bold" />
                 <span className="hidden sm:block">Đăng nhập</span>
               </Link>

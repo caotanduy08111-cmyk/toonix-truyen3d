@@ -5,9 +5,10 @@ import { STORIES, byGenre, fullStories, topStories, genreName, GENRES } from '..
 import { StoryCard } from '../components/StoryCard';
 import { Reveal } from '../components/Reveal';
 import { getHistory } from '../lib/store';
+import { CoverArt } from '../components/CoverArt';
 
 const CONFIG = {
-  all: { kicker: 'Kho truyện', title: 'Danh sách truyện', desc: 'Toàn bộ kho truyện trong thư viện Huyễn Cảnh.', get: () => STORIES, display: 'grid' },
+  all: { kicker: 'Kho truyện', title: 'Danh sách truyện', desc: 'Toàn bộ kho truyện trong thư viện TOONIX.', get: () => STORIES, display: 'grid' },
   updated: { kicker: 'Vừa ra lò', title: 'Truyện mới cập nhật', desc: 'Những chương truyện nóng hổi vừa được đăng tải.', get: () => STORIES, display: 'grid' },
   full: { kicker: 'Đọc một hơi', title: 'Truyện đã hoàn thành', desc: 'Không cần chờ đợi — đọc từ trang đầu đến hồi kết.', get: () => fullStories, display: 'grid' },
   top: { kicker: 'Bảng phong thần', title: 'Top truyện đọc nhiều', desc: 'Bảng xếp hạng dựa trên lượt đọc của cộng đồng.', get: () => topStories, display: 'rank' },
@@ -54,7 +55,7 @@ export default function ListPage({ kind }) {
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <span className="relative w-14 aspect-[3/4] rounded-md overflow-hidden border border-white/10 shrink-0 hidden sm:block">
-                  <span className="absolute inset-0" style={{ background: `linear-gradient(160deg, hsl(${s.hue} 45% 18%), #0a0908)` }} />
+                  <CoverArt story={s} showTitle={false} />
                 </span>
                 <span className="flex-1 min-w-0">
                   <span className="block font-display text-xl md:text-2xl font-semibold text-bone truncate group-hover:text-gold transition-colors">{s.title}</span>
@@ -88,7 +89,7 @@ const HistoryList = ({ history }) => {
         <Clock size={44} className="text-gold/50 mx-auto mb-5" weight="duotone" />
         <p className="font-display text-2xl text-bone">Bạn chưa đọc truyện nào</p>
         <p className="text-sm text-ash mt-2">Hành trình ngàn dặm bắt đầu từ một trang sách.</p>
-        <Link to="/danh-sach" data-testid="history-browse-btn" className="inline-flex items-center gap-2 mt-7 px-7 py-3 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-shadow">
+        <Link to="/danh-sach" data-testid="history-browse-btn" className="inline-flex items-center gap-2 mt-7 px-7 py-3 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_30px_rgba(34,200,234,0.4)] transition-shadow">
           <BookOpen size={15} weight="bold" /> Khám phá truyện
         </Link>
       </div>

@@ -1,5 +1,19 @@
 export const CoverArt = ({ story, showTitle = true }) => {
-  const { hue = 45, motif = 0, title, author } = story;
+  const { hue = 45, motif = 0, title, author, img } = story;
+  if (img) {
+    return (
+      <div className="absolute inset-0 overflow-hidden bg-coal">
+        <img src={img} alt={title} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-black/5" />
+        {showTitle && (
+          <div className="absolute inset-x-0 bottom-0 p-4">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-gold/90 mb-1 drop-shadow">{author}</p>
+            <h3 className="font-display text-xl leading-tight font-semibold text-bone drop-shadow">{title}</h3>
+          </div>
+        )}
+      </div>
+    );
+  }
   const bg = `linear-gradient(165deg, hsl(${hue} 45% 16%) 0%, hsl(${hue} 60% 7%) 55%, #070605 100%)`;
   const accent = `hsl(${hue} 70% 62%)`;
   return (
@@ -15,7 +29,7 @@ export const CoverArt = ({ story, showTitle = true }) => {
         {motif === 0 && (
           <g>
             <circle cx="215" cy="88" r="42" fill={accent} opacity="0.85" />
-            <path d="M0 400 L70 250 L130 330 L200 210 L260 300 L300 240 L300 400 Z" fill="#050505" opacity="0.9" />
+            <path d="M0 400 L70 250 L130 330 L200 210 L260 300 L300 240 L300 400 Z" fill="#020817" opacity="0.9" />
             <path d="M0 400 L100 290 L180 360 L300 280 L300 400 Z" fill="#0b0a08" opacity="0.95" />
           </g>
         )}

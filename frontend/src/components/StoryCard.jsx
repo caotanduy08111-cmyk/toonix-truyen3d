@@ -36,7 +36,7 @@ export const StoryCard = ({ story, className = '', tall = false }) => {
         style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
         whileHover={{ y: -6 }}
         transition={{ type: 'spring', stiffness: 220, damping: 20 }}
-        className={`relative w-full ${tall ? 'aspect-[3/4]' : 'aspect-[3/4]'} rounded-2xl overflow-hidden border border-white/10 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.9)] group-hover:border-gold/40 group-hover:shadow-[0_0_45px_rgba(212,175,55,0.15)]`}
+        className={`relative w-full ${tall ? 'aspect-[3/4]' : 'aspect-[3/4]'} rounded-2xl overflow-hidden border border-white/10 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.9)] group-hover:border-gold/40 group-hover:shadow-[0_0_45px_rgba(34,200,234,0.15)]`}
       >
         <CoverArt story={story} showTitle={false} />
         <motion.div className="absolute inset-0 pointer-events-none" style={{ background: glare }} />
@@ -55,7 +55,7 @@ export const StoryCard = ({ story, className = '', tall = false }) => {
           <h3 className="font-display text-xl font-semibold text-bone leading-tight mt-0.5">{story.title}</h3>
           <div className="flex items-center gap-3 mt-2 text-xs text-ash">
             <span className="flex items-center gap-1"><Eye size={13} weight="fill" className="text-gold/70" />{story.views}</span>
-            <span className="flex items-center gap-1"><Star size={13} weight="fill" className="text-gold" />{story.rating}</span>
+            <span className="flex items-center gap-1"><Star size={13} weight="fill" className="text-[#F8C93A]" />{story.rating}</span>
             <span>{story.chaptersCount} chương</span>
           </div>
         </div>

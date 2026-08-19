@@ -7,31 +7,31 @@
 body {
     margin: 0;
     font-family: 'Manrope', sans-serif;
-    background: #050505;
-    color: #EAEAEA;
+    background: #020817;
+    color: #EEF4FF;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
 }
 
 ::selection {
-    background: #D4AF37;
-    color: #050505;
+    background: #22C8EA;
+    color: #020817;
 }
 
 ::-webkit-scrollbar {
     width: 10px;
 }
 ::-webkit-scrollbar-track {
-    background: #050505;
+    background: #020817;
 }
 ::-webkit-scrollbar-thumb {
-    background: #26241d;
+    background: #1E2C50;
     border-radius: 8px;
-    border: 2px solid #050505;
+    border: 2px solid #020817;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #D4AF37;
+    background: #22C8EA;
 }
 
 @layer base {
@@ -42,26 +42,26 @@ body {
         --card-foreground: 0 0% 92%;
         --popover: 240 5% 6%;
         --popover-foreground: 0 0% 92%;
-        --primary: 45 65% 52%;
+        --primary: 193 83% 53%;
         --primary-foreground: 0 0% 3%;
         --secondary: 240 4% 10%;
         --secondary-foreground: 0 0% 92%;
         --muted: 240 4% 10%;
         --muted-foreground: 0 0% 63%;
-        --accent: 45 65% 52%;
+        --accent: 193 83% 53%;
         --accent-foreground: 0 0% 3%;
         --destructive: 0 66% 33%;
         --destructive-foreground: 0 0% 98%;
         --border: 0 0% 100% / 0.08;
         --input: 240 4% 14%;
-        --ring: 45 65% 52%;
+        --ring: 193 83% 53%;
         --radius: 0.75rem;
     }
 }
 
 @layer utilities {
     .text-stroke-gold {
-        -webkit-text-stroke: 1px rgba(212, 175, 55, 0.55);
+        -webkit-text-stroke: 1px rgba(34, 200, 234, 0.55);
         color: transparent;
     }
     .text-stroke-faint {
@@ -75,7 +75,7 @@ body {
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .gold-glow {
-        box-shadow: 0 0 50px rgba(212, 175, 55, 0.12);
+        box-shadow: 0 0 50px rgba(34, 200, 234, 0.12);
     }
     .no-scrollbar::-webkit-scrollbar {
         display: none;
@@ -128,9 +128,9 @@ body {
     perspective: 2200px;
 }
 .book-page {
-    background: linear-gradient(105deg, #141311 0%, #1b1915 55%, #15130f 100%);
-    color: #E8E2D5;
-    border: 1px solid rgba(212, 175, 55, 0.14);
+    background: linear-gradient(105deg, #0C1428 0%, #101C3A 55%, #0C1428 100%);
+    color: #E2EAFB;
+    border: 1px solid rgba(34, 200, 234, 0.14);
     box-shadow: inset 18px 0 34px -18px rgba(0, 0, 0, 0.8);
     overflow: hidden;
 }
@@ -138,8 +138,8 @@ body {
     box-shadow: inset -18px 0 34px -18px rgba(0, 0, 0, 0.8);
 }
 .book-cover-page {
-    background: radial-gradient(120% 120% at 30% 20%, #241d10 0%, #0d0b08 60%, #050505 100%);
-    border: 1px solid rgba(212, 175, 55, 0.4);
+    background: radial-gradient(120% 120% at 30% 20%, #14224A 0%, #0A1226 60%, #020817 100%);
+    border: 1px solid rgba(34, 200, 234, 0.4);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,14 +154,14 @@ body {
     line-height: 1.85;
     text-align: justify;
     margin-bottom: 1.1em;
-    color: #DDD5C3;
+    color: #DCE6FA;
 }
 .reader-serif p:first-of-type::first-letter {
     font-size: 3.2em;
     float: left;
     line-height: 0.85;
     padding-right: 0.12em;
-    color: #D4AF37;
+    color: #22C8EA;
     font-weight: 600;
 }
 

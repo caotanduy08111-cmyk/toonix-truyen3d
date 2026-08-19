@@ -28,7 +28,7 @@ export default function GenresPage() {
               <Link
                 to={`/the-loai/${g.slug}`}
                 data-testid={`genre-tile-${g.slug}`}
-                className="group relative block rounded-2xl overflow-hidden border border-white/10 hover:border-gold/50 hover:-translate-y-1.5 hover:shadow-[0_0_40px_rgba(212,175,55,0.12)] transition-[transform,border-color,box-shadow] duration-400 bg-coal/70"
+                className="group relative block rounded-2xl overflow-hidden border border-white/10 hover:border-gold/50 hover:-translate-y-1.5 hover:shadow-[0_0_40px_rgba(34,200,234,0.12)] transition-[transform,border-color,box-shadow] duration-400 bg-coal/70"
               >
                 <div className="relative h-44 overflow-hidden">
                   {list.slice(0, 2).map((s, j) => (

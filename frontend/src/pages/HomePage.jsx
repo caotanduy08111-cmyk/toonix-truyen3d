@@ -31,7 +31,7 @@ const Hero = () => {
   const lines = [
     { text: 'BƯỚC VÀO', cls: 'text-bone' },
     { text: 'THẾ GIỚI', cls: 'text-stroke-gold' },
-    { text: 'HUYỄN CẢNH', cls: 'text-gold italic' },
+    { text: 'TOONIX', cls: 'text-gold italic' },
   ];
 
   return (
@@ -68,7 +68,7 @@ const Hero = () => {
           transition={{ delay: 0.9, duration: 0.8 }}
           className="mt-7 max-w-xl text-ash text-base md:text-lg leading-relaxed"
         >
-          Hàng ngàn bộ truyện được dựng lại như những thế giới sống động — lật từng trang giấy trong không gian 3D, đắm chìm giữa bụi sao và ánh trăng vàng.
+          Hàng ngàn bộ truyện được dựng lại như những thế giới sống động — lật từng trang giấy trong không gian 3D, đắm chìm giữa bụi sao và ánh băng xanh vô tận.
         </motion.p>
 
         <motion.div
@@ -80,7 +80,7 @@ const Hero = () => {
           <Link
             to={`/doc/${STORIES[0].slug}/1`}
             data-testid="hero-read-now-btn"
-            className="group h-13 px-8 py-3.5 rounded-full bg-gold text-obsidian font-bold text-sm uppercase tracking-wider flex items-center gap-2.5 hover:shadow-[0_0_40px_rgba(212,175,55,0.5)] transition-shadow duration-400"
+            className="group h-13 px-8 py-3.5 rounded-full bg-gold text-obsidian font-bold text-sm uppercase tracking-wider flex items-center gap-2.5 hover:shadow-[0_0_40px_rgba(34,200,234,0.5)] transition-shadow duration-400"
           >
             <BookOpen size={17} weight="bold" />
             Đọc ngay

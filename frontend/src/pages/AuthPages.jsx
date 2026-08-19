@@ -27,7 +27,7 @@ const AuthLayout = ({ children, quote }) => (
       <div className="relative z-10 max-w-md px-10">
         <p className="font-display italic text-3xl xl:text-4xl text-bone leading-snug">“{quote}”</p>
         <div className="w-14 h-px bg-gold/60 my-6" />
-        <p className="text-xs uppercase tracking-[0.35em] text-gold">Huyễn Cảnh 3D</p>
+        <p className="text-xs uppercase tracking-[0.35em] text-gold">TOONIX</p>
       </div>
     </div>
     <div className="flex items-center justify-center px-5 py-14">
@@ -93,7 +93,7 @@ export function LoginPage() {
             type="submit"
             data-testid="login-submit-btn"
             disabled={loading}
-            className="w-full py-4 rounded-full bg-gold text-obsidian font-bold text-sm uppercase tracking-wider hover:shadow-[0_0_35px_rgba(212,175,55,0.45)] transition-shadow disabled:opacity-60 flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-full bg-gold text-obsidian font-bold text-sm uppercase tracking-wider hover:shadow-[0_0_35px_rgba(34,200,234,0.45)] transition-shadow disabled:opacity-60 flex items-center justify-center gap-2"
           >
             {loading ? <span className="w-4 h-4 border-2 border-obsidian/40 border-t-obsidian rounded-full animate-spin" /> : <BookOpen size={16} weight="bold" />}
             {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
@@ -143,7 +143,7 @@ export function RegisterPage() {
             type="submit"
             data-testid="register-submit-btn"
             disabled={loading}
-            className="w-full py-4 rounded-full bg-gold text-obsidian font-bold text-sm uppercase tracking-wider hover:shadow-[0_0_35px_rgba(212,175,55,0.45)] transition-shadow disabled:opacity-60 flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-full bg-gold text-obsidian font-bold text-sm uppercase tracking-wider hover:shadow-[0_0_35px_rgba(34,200,234,0.45)] transition-shadow disabled:opacity-60 flex items-center justify-center gap-2"
           >
             {loading && <span className="w-4 h-4 border-2 border-obsidian/40 border-t-obsidian rounded-full animate-spin" />}
             {loading ? 'Đang tạo tài khoản...' : 'Tạo tài khoản'}

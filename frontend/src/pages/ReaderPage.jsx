@@ -101,7 +101,7 @@ export default function ReaderPage() {
             data-testid="flip-book"
           >
             <div className="book-cover-page">
-              <p className="text-[10px] uppercase tracking-[0.5em] text-gold/70 mb-5">Huyễn Cảnh 3D</p>
+              <p className="text-[10px] uppercase tracking-[0.5em] text-gold/70 mb-5">TOONIX</p>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-bone leading-tight">{story.title}</h2>
               <p className="font-display italic text-gold mt-4 text-lg">{chapter.title}</p>
               <div className="w-14 h-px bg-gold/50 my-6" />
@@ -127,7 +127,7 @@ export default function ReaderPage() {
                   <button
                     data-testid="next-chapter-btn"
                     onClick={() => navigate(`/doc/${story.slug}/${chapterNum + 1}`)}
-                    className="py-3 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_30px_rgba(212,175,55,0.45)] transition-shadow"
+                    className="py-3 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_30px_rgba(34,200,234,0.45)] transition-shadow"
                   >
                     Chương tiếp theo
                   </button>
@@ -148,7 +148,7 @@ export default function ReaderPage() {
         <span data-testid="page-indicator" className="text-xs text-ash uppercase tracking-[0.25em] min-w-[90px] text-center">
           {Math.min(pageIdx + 1, totalPages)} / {totalPages}
         </span>
-        <button data-testid="next-page-btn" onClick={() => flip()?.flipNext()} className="h-11 px-5 rounded-full bg-gold text-obsidian font-bold flex items-center gap-2 text-xs uppercase tracking-wider hover:shadow-[0_0_30px_rgba(212,175,55,0.45)] transition-shadow">
+        <button data-testid="next-page-btn" onClick={() => flip()?.flipNext()} className="h-11 px-5 rounded-full bg-gold text-obsidian font-bold flex items-center gap-2 text-xs uppercase tracking-wider hover:shadow-[0_0_30px_rgba(34,200,234,0.45)] transition-shadow">
           Trang sau <CaretRight size={15} weight="bold" />
         </button>
       </div>

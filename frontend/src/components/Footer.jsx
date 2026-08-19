@@ -1,16 +1,12 @@
 import { Link } from 'react-router-dom';
-import { BookOpen } from '@phosphor-icons/react';
 import { GENRES } from '../data/stories';
 
 export const Footer = () => (
   <footer className="relative z-10 border-t border-white/10 bg-coal/60 backdrop-blur-md mt-24">
     <div className="max-w-[1440px] mx-auto px-5 md:px-10 py-16 grid grid-cols-2 md:grid-cols-4 gap-10">
       <div className="col-span-2 md:col-span-1">
-        <Link to="/" className="flex items-center gap-2.5">
-          <span className="w-9 h-9 rounded-lg bg-gold/15 border border-gold/40 flex items-center justify-center">
-            <BookOpen size={18} weight="duotone" className="text-gold" />
-          </span>
-          <span className="font-display text-xl font-bold text-bone">HUYỄN<span className="text-gold italic">CẢNH</span></span>
+        <Link to="/" className="inline-flex items-center">
+          <img src="/logo.png" alt="TOONIX" className="h-11 w-auto drop-shadow-[0_0_16px_rgba(34,200,234,0.4)]" />
         </Link>
         <p className="text-sm text-ash mt-4 leading-relaxed max-w-xs">
           Thư viện truyện 3D — nơi mỗi câu chuyện là một thế giới bạn có thể chạm vào.
@@ -42,7 +38,7 @@ export const Footer = () => (
       </div>
     </div>
     <div className="border-t border-white/5 py-5 text-center text-xs text-ash/70">
-      © 2026 Huyễn Cảnh 3D — Đọc truyện theo cách chưa từng có
+      © 2026 TOONIX — Infinite Story Universe
     </div>
   </footer>
 );
