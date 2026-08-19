@@ -1,0 +1,95 @@
+{
+  "theme": "dark",
+  "typography": {
+    "headings": {
+      "fontFamily": "'Cormorant Garamond', serif",
+      "weights": ["400", "600", "700"],
+      "usage": "H1, H2, H3, large expressive numbers and editorial quotes. MUST import from Google Fonts. Perfect for the Vietnamese fantasy/wuxia aesthetic."
+    },
+    "body": {
+      "fontFamily": "'Manrope', sans-serif",
+      "weights": ["300", "400", "500", "600"],
+      "usage": "Paragraphs, UI elements, reading text, tags. (Supports Vietnamese)."
+    }
+  },
+  "colors": {
+    "background": "#050505",
+    "surface": "#0F0F11",
+    "surface_glass": "rgba(15, 15, 17, 0.6)",
+    "primary": "#D4AF37",
+    "primary_glow": "rgba(212, 175, 55, 0.4)",
+    "accent": "#8A1C1C",
+    "text_primary": "#EAEAEA",
+    "text_secondary": "#A0A0A0",
+    "border": "rgba(255, 255, 255, 0.06)",
+    "forbidden_colors": ["#7351B7", "#1B93A4"]
+  },
+  "visual_enhancers": {
+    "glassmorphism": "backdrop-blur-xl bg-[#0F0F11]/60 border-b border-white/10. Use for the sticky navigation and reading chapter toolbars.",
+    "textures": "Use an SVG noise/grain overlay (mix-blend-overlay, opacity-20, pointer-events-none) across the entire site to remove digital flatness and give a cinematic film grain feel.",
+    "shadows": "Deep, diffused glow rather than hard drop shadows. e.g., shadow-[0_0_40px_rgba(212,175,55,0.1)] for glowing books or top-ranking cards.",
+    "borders": "1px delicate inner stroke is MANDATORY on glass elements to separate it from the background (border-white/10)."
+  },
+  "grids": "MODE A: The 'Tetris' Grid for Story Categories and Home page highlights. Never fill the grid symmetrically. Use gap-8 or gap-12.",
+  "layouts": {
+    "hero": "Full viewport height. Background is a React Three Fiber canvas with slowly floating 3D particles/dust. Foreground is a kinetic masked Framer Motion text reveal of the story title.",
+    "story_cards": "Use Framer Motion to apply 3D tilt (rotateX, rotateY) based on mouse position. Overlay dark gradients (bg-gradient-to-t from-black/90 via-black/40 to-transparent) to ensure text legibility.",
+    "reader_interface": "Distraction-free. Use 'react-pageflip' for realistic 3D book page turning. Toolbars should be Crystal Glassmorphism and should auto-hide on scroll.",
+    "spacing": "Generous Spacing Philosophy. Use p-8, p-12, p-16. Do not cram elements together."
+  },
+  "motion": {
+    "scroll": "MUST use 'lenis' for momentum smooth scrolling. Parallax effects on large images.",
+    "page_transitions": "Framer motion AnimatePresence fade and subtle scale.",
+    "micro_interactions": "Hover states must lift the element (-translate-y-1) and increase the shadow/glow."
+  },
+  "accessibility": {
+    "contrast": "Ensure text over images has a background overlay to maintain APCA readability.",
+    "motion": "Respect prefers-reduced-motion in Framer Motion.",
+    "testing": "All interactive elements MUST have data-testid attributes (e.g., data-testid='read-button')."
+  },
+  "media": {
+    "image_urls": {
+      "hero_backgrounds": [
+        "https://images.unsplash.com/photo-1760578360045-16ce470bc191?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHw0fHxkYXJrJTIwY2luZW1hdGljJTIwZmFudGFzeSUyMGJvb2t8ZW58MHx8fHwxNzg3MTY5OTExfDA&ixlib=rb-4.1.0&q=85",
+        "https://images.unsplash.com/photo-1633296530314-f07ca1351ea1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxNzV8MHwxfHNlYXJjaHwyfHxjeWJlcnB1bmslMjBkYXJrJTIwbmVvbiUyMGNpdHlzY2FwZXxlbnwwfHx8fDE3ODcxNjk5MTF8MA&ixlib=rb-4.1.0&q=85"
+      ],
+      "story_covers": [
+        "https://images.unsplash.com/photo-1777340237404-ba98bc4e1ff6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHwzfHxkYXJrJTIwY2luZW1hdGljJTIwZmFudGFzeSUyMGJvb2t8ZW58MHx8fHwxNzg3MTY5OTExfDA&ixlib=rb-4.1.0&q=85",
+        "https://images.pexels.com/photos/38787330/pexels-photo-38787330.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.pexels.com/photos/28926784/pexels-photo-28926784.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "https://images.unsplash.com/photo-1594886801340-88d2d9c028e2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxNzV8MHwxfHNlYXJjaHw0fHxjeWJlcnB1bmslMjBkYXJrJTIwbmVvbiUyMGNpdHlzY2FwZXxlbnwwfHx8fDE3ODcxNjk5MTF8MA&ixlib=rb-4.1.0&q=85"
+      ]
+    }
+  },
+  "libraries": {
+    "3d": "@react-three/fiber, @react-three/drei, three",
+    "animation": "framer-motion",
+    "scrolling": "lenis",
+    "icons": "@phosphor-icons/react",
+    "page_flip": "react-pageflip"
+  },
+  "instructions_to_main_agent": [
+    "Run: yarn add @react-three/fiber @react-three/drei three framer-motion lenis @phosphor-icons/react react-pageflip clsx tailwind-merge",
+    "Import 'Cormorant Garamond' and 'Manrope' from Google Fonts in index.css. Setup Tailwind config to use them. Make sure to define colors accurately.",
+    "Implement a persistent smooth scrolling context using Lenis at the root app level.",
+    "For the Hero section, use a Canvas from @react-three/fiber. Add <Stars> or a custom particle system for the '3D floating objects' background effect.",
+    "Implement the story cards with Framer Motion. Use onMouseMove to calculate the tilt and apply it via useTransform for a 3D rotate effect on hover.",
+    "For the story reader page (trang truyện / reading mode), use react-pageflip for the 3D book turning effect. This fulfills the '3D book page-flip effect when reading' requirement.",
+    "The UI must be strictly in Vietnamese. Ensure accurate routing structure (Trang chủ, Thể loại, Top Rankings, Đăng nhập, Hồ sơ, v.v.). Mock the data as requested.",
+    "DO NOT use raw HTML <select> or <input type='date'>. Use custom designed Radix primitives or styled dropdowns.",
+    "Use extremely generous padding (e.g., p-12, py-24). Avoid default centered 'SaaS' layouts. Make it look like a high-end cinematic universe.",
+    "Mock the authentication flows for Login/Register with beautifully designed modal overlays or full-page splits.",
+    "Always apply data-testid to interactive elements (e.g. data-testid='genre-filter-button')."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur). NEVER use completely transparent backgrounds where text is readable over changing images.",
+    "You MUST NOT apply universal transition. Eg: transition: all. Always target specific properties like transform and opacity.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead."
+  ]
+}
