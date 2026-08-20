@@ -13,6 +13,7 @@ import StoryPage from '@/pages/StoryPage';
 import ReaderPage from '@/pages/ReaderPage';
 import ListPage from '@/pages/ListPage';
 import ProfilePage from '@/pages/ProfilePage';
+import TopPage from '@/pages/TopPage';
 import { LoginPage, RegisterPage } from '@/pages/AuthPages';
 
 let lenisInstance = null;
@@ -58,7 +59,7 @@ const AnimatedRoutes = () => {
           <Route path="/danh-sach" element={<PageShell testid="page-all"><ListPage kind="all" /></PageShell>} />
           <Route path="/truyen-cap-nhat" element={<PageShell testid="page-updated"><ListPage kind="updated" /></PageShell>} />
           <Route path="/truyen-full" element={<PageShell testid="page-full"><ListPage kind="full" /></PageShell>} />
-          <Route path="/top" element={<PageShell testid="page-top"><ListPage kind="top" /></PageShell>} />
+          <Route path="/top" element={<PageShell testid="page-top"><TopPage /></PageShell>} />
           <Route path="/lich-su" element={<PageShell testid="page-history"><ListPage kind="history" /></PageShell>} />
           <Route path="/truyen/:slug" element={<PageShell testid="page-story"><StoryPage /></PageShell>} />
           <Route path="/doc/:slug/:num" element={<ReaderPage />} />
