@@ -71,6 +71,17 @@ export default function StoryPage() {
   const rank = topStories.findIndex((s) => s.slug === slug) + 1;
   const related = STORIES.filter((s) => s.slug !== slug && s.genres.some((g) => story.genres.includes(g))).slice(0, 3);
 
+  const sPath = (() => {
+    const n = story.chapters.length;
+    const H = 1000 / n;
+    let d = 'M 50 0';
+    for (let i = 0; i < n; i++) {
+      const c = i % 2 ? 8 : 92;
+      d += ` C ${c} ${i * H + H * 0.35}, ${c} ${i * H + H * 0.65}, 50 ${(i + 1) * H}`;
+    }
+    return d;
+  })();
+
   const onComment = (e) => {
     e.preventDefault();
     if (!draft.trim()) return;
@@ -116,7 +127,7 @@ export default function StoryPage() {
         </div>
       </div>
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 -mt-24 md:-mt-36 relative z-10">
-      <div className="grid md:grid-cols-2 lg:grid-cols-[260px_1fr_300px] gap-5 lg:gap-7">
+      <div className="grid md:grid-cols-2 lg:grid-cols-[280px_auto_320px] gap-5 lg:gap-8 lg:justify-center">
         <div className="flex flex-col gap-5 lg:gap-0 lg:justify-between lg:py-2 order-2 lg:order-1">
           <Reveal>
             <div className="glass rounded-2xl p-6 text-center" data-testid="author-card">
@@ -227,11 +238,29 @@ export default function StoryPage() {
       <div className="mt-24 max-w-4xl mx-auto" data-testid="chapter-roadmap">
         <Reveal><h2 className="font-display text-3xl md:text-4xl font-semibold text-bone text-center">Lộ trình chương mới</h2></Reveal>
         <div className="relative mt-12">
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 border-l-2 border-dashed border-gold/30" />
+          <div className="absolute left-4 top-0 bottom-0 border-l-2 border-dashed border-gold/30 md:hidden" />
+          <svg className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-28 hidden md:block" viewBox="0 0 100 1000" preserveAspectRatio="none" aria-hidden="true">
+            <motion.path
+              d={sPath}
+              fill="none"
+              stroke="rgba(34,200,234,0.55)"
+              strokeWidth="2.5"
+              strokeDasharray="10 12"
+              vectorEffect="non-scaling-stroke"
+              style={{ filter: 'drop-shadow(0 0 6px rgba(34,200,234,0.6))' }}
+              initial={{ pathLength: 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 2.2, ease: 'easeInOut' }}
+            />
+            {story.chapters.slice(1).map((_, i) => (
+              <circle key={i} cx={50} cy={((i + 1) * 1000) / story.chapters.length} r={6} fill="#22C8EA" opacity={0.9} />
+            ))}
+          </svg>
           {story.chapters.map((c, i) => (
             <Reveal key={c.num} delay={i * 0.08} y={28}>
               <div className={`relative pl-12 md:pl-0 md:w-1/2 mb-8 ${i % 2 ? 'md:ml-auto md:pl-14' : 'md:pr-14'}`}>
-                <span className={`absolute top-7 w-4 h-4 rounded-full bg-gold shadow-[0_0_14px_rgba(34,200,234,0.8)] left-[9px] ${i % 2 ? 'md:-left-[9px]' : 'md:left-auto md:-right-[9px]'}`} />
+                <span className={`absolute top-7 w-4 h-4 rounded-full bg-gold shadow-[0_0_14px_rgba(34,200,234,0.8)] left-[9px] md:hidden`} />
                 <Link
                   to={`/doc/${story.slug}/${c.num}`}
                   data-testid={`chapter-link-${c.num}`}
