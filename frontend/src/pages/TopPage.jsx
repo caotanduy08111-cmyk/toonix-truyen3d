@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Crown, Eye, Fire, Trophy } from '@phosphor-icons/react';
+import { Crown, Eye, Fire, Medal, Trophy } from '@phosphor-icons/react';
 import { topStories, genreName } from '../data/stories';
 import { CoverArt } from '../components/CoverArt';
 import { StoryCard } from '../components/StoryCard';
@@ -66,8 +66,15 @@ const SidePanel = () => {
   );
 };
 
+const RANK_STYLE = {
+  1: { label: 'text-gold drop-shadow-[0_0_14px_rgba(34,200,234,0.8)]', border: 'border-gold/60', glow: 'shadow-[0_0_60px_rgba(34,200,234,0.25)]', hoverGlow: 'hover:shadow-[0_0_80px_rgba(34,200,234,0.45)] hover:border-gold', title: 'text-gold', badge: 'bg-gold text-obsidian', medal: 'text-gold' },
+  2: { label: 'text-[#C9D4E6] drop-shadow-[0_0_14px_rgba(201,212,230,0.7)]', border: 'border-[#C9D4E6]/45', glow: 'shadow-[0_0_45px_rgba(201,212,230,0.16)]', hoverGlow: 'hover:shadow-[0_0_65px_rgba(201,212,230,0.35)] hover:border-[#C9D4E6]/80', title: 'text-[#E4EAF6]', badge: 'bg-[#C9D4E6] text-obsidian', medal: 'text-[#C9D4E6]' },
+  3: { label: 'text-[#D89A63] drop-shadow-[0_0_14px_rgba(216,154,99,0.7)]', border: 'border-[#D89A63]/45', glow: 'shadow-[0_0_45px_rgba(216,154,99,0.16)]', hoverGlow: 'hover:shadow-[0_0_65px_rgba(216,154,99,0.35)] hover:border-[#D89A63]/80', title: 'text-[#EBB98A]', badge: 'bg-[#D89A63] text-obsidian', medal: 'text-[#D89A63]' },
+};
+
 const PodiumCard = ({ story, rank, delay }) => {
   const isFirst = rank === 1;
+  const st = RANK_STYLE[rank];
   return (
     <motion.div
       initial={{ opacity: 0, y: 70 }}
@@ -76,30 +83,31 @@ const PodiumCard = ({ story, rank, delay }) => {
       className={`relative flex flex-col items-center ${isFirst ? 'md:-mt-10 z-10' : ''}`}
       data-testid={`podium-top${rank}`}
     >
-      {isFirst && (
-        <motion.div
-          animate={{ y: [0, -8, 0], rotate: [-4, 4, -4] }}
-          transition={{ repeat: Infinity, duration: 3.2, ease: 'easeInOut' }}
-          className="mb-2"
-        >
+      <motion.div
+        animate={{ y: [0, -8, 0], rotate: isFirst ? [-4, 4, -4] : [0, 0, 0] }}
+        transition={{ repeat: Infinity, duration: 3.2, ease: 'easeInOut' }}
+        className="mb-2"
+      >
+        {isFirst ? (
           <Crown size={40} weight="fill" className="text-gold drop-shadow-[0_0_18px_rgba(34,200,234,0.9)]" />
-        </motion.div>
-      )}
-      <p className={`font-display font-bold leading-none mb-3 ${isFirst ? 'text-4xl md:text-5xl text-gold' : 'text-2xl md:text-3xl text-stroke-faint'}`}>
+        ) : (
+          <Medal size={30} weight="fill" className={`${st.medal} drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]`} />
+        )}
+      </motion.div>
+      <p className={`font-display font-bold leading-none mb-3 ${isFirst ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl'} ${st.label}`}>
         #Top{rank}
       </p>
       <Link
         to={`/truyen/${story.slug}`}
-        className={`group relative block w-full aspect-[3/4] rounded-2xl overflow-hidden border transition-[transform,box-shadow,border-color] duration-400 hover:-translate-y-2 ${
-          isFirst
-            ? 'border-gold/60 shadow-[0_0_60px_rgba(34,200,234,0.25)] hover:shadow-[0_0_80px_rgba(34,200,234,0.45)] md:scale-[1.06]'
-            : 'border-white/12 hover:border-gold/40 hover:shadow-[0_0_40px_rgba(34,200,234,0.2)]'
-        }`}
+        className={`group relative block w-full aspect-[3/4] rounded-2xl overflow-hidden border transition-[transform,box-shadow,border-color] duration-400 hover:-translate-y-2 ${st.border} ${st.glow} ${st.hoverGlow} ${isFirst ? 'md:scale-[1.06]' : ''}`}
       >
         <CoverArt story={story} showTitle={false} />
         <span className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
+        <span className={`absolute top-3 left-3 z-10 w-8 h-8 rounded-full flex items-center justify-center font-display font-bold text-base shadow-lg ${st.badge}`}>
+          {rank}
+        </span>
         <span className="absolute inset-x-0 bottom-0 p-4">
-          <span className={`block font-display font-bold leading-tight ${isFirst ? 'text-xl md:text-2xl text-gold' : 'text-lg text-bone'}`}>{story.title}</span>
+          <span className={`block font-display font-bold leading-tight ${isFirst ? 'text-xl md:text-2xl' : 'text-lg'} ${st.title}`}>{story.title}</span>
           <span className="flex items-center gap-1.5 mt-1.5 text-xs text-ash">
             <Eye size={13} className="text-gold/70" />{story.views} · <Fire size={13} weight="fill" className="text-blood" />{story.rating}
           </span>
