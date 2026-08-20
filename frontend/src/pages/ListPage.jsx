@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { BookOpen, Clock, Eye } from '@phosphor-icons/react';
 import { STORIES, byGenre, fullStories, topStories, genreName, GENRES } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
@@ -27,16 +28,75 @@ export default function ListPage({ kind }) {
 
   return (
     <div data-testid={`list-page-${kind}`} className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-32 md:pt-40 pb-10 min-h-screen">
-      <Reveal>
-        <p className="text-xs uppercase tracking-[0.5em] text-gold mb-4 flex items-center gap-3">
-          <span className="w-10 h-px bg-gold/60" /> {cfg.kicker}
-        </p>
-        <h1 className="font-display text-5xl md:text-7xl font-bold text-bone leading-tight">{title}</h1>
-        <p className="text-ash mt-4 max-w-2xl text-base md:text-lg">{desc}</p>
-        {cfg.display !== 'history' && (
-          <p className="text-xs uppercase tracking-[0.3em] text-ash mt-6">{stories.length} bộ truyện</p>
-        )}
-      </Reveal>
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-coal/40 px-6 md:px-12 py-12 md:py-16" data-testid="list-hero">
+        <span className="absolute -bottom-10 -left-4 font-display text-[8rem] md:text-[12rem] font-bold text-white/[0.04] leading-none select-none pointer-events-none whitespace-nowrap">
+          {title}
+        </span>
+        <div className="absolute -top-24 -right-16 w-96 h-96 bg-gold/10 blur-[110px] rounded-full pointer-events-none" />
+        <div className="relative grid lg:grid-cols-[1fr_auto] gap-10 items-center">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-xs uppercase tracking-[0.5em] text-gold mb-4 flex items-center gap-3"
+            >
+              <span className="w-10 h-px bg-gold/60" /> {cfg.kicker}
+            </motion.p>
+            <div className="overflow-hidden">
+              <motion.h1
+                initial={{ y: '110%' }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                className="font-display text-5xl md:text-7xl font-bold text-bone leading-[1.05]"
+              >
+                {title}
+              </motion.h1>
+            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.6 }}
+              className="text-ash mt-4 max-w-xl text-base md:text-lg"
+            >
+              {desc}
+            </motion.p>
+            {cfg.display !== 'history' && (
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="mt-7 inline-flex items-center gap-3 glass rounded-full pl-2 pr-5 py-2 gold-glow"
+                data-testid="list-count-chip"
+              >
+                <span className="w-9 h-9 rounded-full bg-gold text-obsidian flex items-center justify-center font-display font-bold text-lg">{stories.length}</span>
+                <span className="text-xs uppercase tracking-[0.25em] text-ash">bộ truyện trong tuyển tập</span>
+              </motion.div>
+            )}
+          </div>
+          {stories.length > 0 && (
+            <div className="relative hidden lg:block w-[360px] h-[300px]" style={{ perspective: 900 }} data-testid="list-hero-fan">
+              {stories.slice(0, 3).map((s, i) => (
+                <motion.div
+                  key={s.slug}
+                  initial={{ opacity: 0, y: 60, rotate: 0 }}
+                  animate={{ opacity: 1, y: 0, rotate: (i - 1) * 9 }}
+                  transition={{ delay: 0.3 + i * 0.15, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ y: -14, rotate: (i - 1) * 9, scale: 1.06, zIndex: 10 }}
+                  className="absolute top-2 w-36 aspect-[3/4] rounded-xl overflow-hidden border border-white/15 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85)] animate-floaty"
+                  style={{ left: `${30 + i * 95}px`, zIndex: i, animationDelay: `${i * 0.9}s` }}
+                >
+                  <Link to={`/truyen/${s.slug}`} data-testid={`fan-cover-${s.slug}`} className="block w-full h-full">
+                    <CoverArt story={s} showTitle={false} />
+                    <span className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <span className="absolute bottom-2.5 inset-x-2.5 font-display text-sm font-semibold text-bone leading-tight drop-shadow">{s.title}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
 
       {cfg.display === 'grid' && (
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-7 mt-14">
