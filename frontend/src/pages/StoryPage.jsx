@@ -23,7 +23,7 @@ const TiltCover = ({ story }) => {
         my.set((e.clientY - r.top) / r.height);
       }}
       onMouseLeave={() => { mx.set(0.5); my.set(0.5); }}
-      className="relative w-full max-w-[300px] mx-auto"
+      className="relative w-full max-w-[380px] mx-auto"
     >
       <motion.div
         style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
