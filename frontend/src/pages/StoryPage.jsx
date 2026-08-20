@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { BookOpen, Clock, Eye, Heart, ListBullets, Star, User } from '@phosphor-icons/react';
+import { BookOpen, ChatCircle, Clock, Eye, Heart, ListBullets, PaperPlaneTilt, Star, ThumbsUp, TrendUp, User } from '@phosphor-icons/react';
 import { toast } from 'sonner';
-import { getStory, genreName, STORIES } from '../data/stories';
+import { getStory, genreName, STORIES, topStories } from '../data/stories';
 import { CoverArt } from '../components/CoverArt';
 import { StoryCard } from '../components/StoryCard';
 import { Reveal } from '../components/Reveal';
@@ -36,10 +36,24 @@ const TiltCover = ({ story }) => {
   );
 };
 
+const likesOf = (v) => {
+  const n = parseFloat(v) * 0.09;
+  return n >= 1 ? `${n.toFixed(1)}M` : `${Math.round(n * 1000)}K`;
+};
+
+const COMMENTS = [
+  { name: 'Mèo Đọc Truyện', text: 'Truyện hay xuất sắc, đọc từ tối qua đến giờ không ngủ được. Mong tác giả ra chương nhanh hơn nữa!', time: '2 giờ trước', likes: 214 },
+  { name: 'Thư Khố Đại Hiệp', text: 'Hiệu ứng lật sách 3D đỉnh quá, đọc truyện tranh mà cứ như xem phim điện ảnh.', time: '5 giờ trước', likes: 98 },
+  { name: 'Nguyệt Nha', text: 'Tình tiết chương này gây cấn thật sự, nhân vật chính ngầu đét. Cố lên tác giả!', time: 'Hôm qua', likes: 56 },
+  { name: 'Độc Giả Vô Danh', text: 'Bìa đẹp, nội dung cuốn. Cho 5 sao không tiếc!', time: '2 ngày trước', likes: 12 },
+];
+
 export default function StoryPage() {
   const { slug } = useParams();
   const story = getStory(slug);
   const [fav, setFav] = useState(false);
+  const [comments, setComments] = useState(COMMENTS);
+  const [draft, setDraft] = useState('');
 
   useEffect(() => { setFav(isFav(slug)); }, [slug]);
 
@@ -54,7 +68,19 @@ export default function StoryPage() {
     );
   }
 
+  const rank = topStories.findIndex((s) => s.slug === slug) + 1;
   const related = STORIES.filter((s) => s.slug !== slug && s.genres.some((g) => story.genres.includes(g))).slice(0, 3);
+
+  const onComment = (e) => {
+    e.preventDefault();
+    if (!draft.trim()) return;
+    setComments([{ name: 'Bạn', text: draft.trim(), time: 'Vừa xong', likes: 0 }, ...comments]);
+    setDraft('');
+    toast.success('Đã đăng bình luận (demo)');
+  };
+
+  const likeComment = (i) =>
+    setComments(comments.map((c, j) => (j === i ? { ...c, likes: c.likes + (c.liked ? -1 : 1), liked: !c.liked } : c)));
 
   const onFav = () => {
     const now = toggleFav(slug);
@@ -90,85 +116,192 @@ export default function StoryPage() {
         </div>
       </div>
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 -mt-24 md:-mt-36 relative z-10">
-      <div className="grid lg:grid-cols-[340px_1fr] gap-12 lg:gap-20">
-        <Reveal>
-          <TiltCover story={story} />
-          <div className="flex gap-3 mt-8 max-w-[300px] mx-auto">
-            <Link
-              to={`/doc/${story.slug}/1`}
-              data-testid="read-from-start-btn"
-              className="flex-1 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:shadow-[0_0_35px_rgba(34,200,234,0.45)] transition-shadow duration-300"
-            >
-              <BookOpen size={15} weight="bold" /> Đọc từ đầu
-            </Link>
-            <button
-              data-testid="favorite-toggle-btn"
-              onClick={onFav}
-              className={`w-13 px-4 rounded-full border flex items-center justify-center transition-colors duration-300 ${fav ? 'bg-blood/30 border-blood text-red-300' : 'border-white/20 text-ash hover:border-blood hover:text-red-300'}`}
-              aria-label="Yêu thích"
-            >
-              <Heart size={18} weight={fav ? 'fill' : 'regular'} />
-            </button>
-          </div>
-        </Reveal>
-
-        <div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-[260px_1fr_300px] gap-5 lg:gap-7">
+        <div className="flex flex-col gap-5 order-2 lg:order-1">
           <Reveal>
-            <div className="flex flex-wrap gap-2 mb-5">
-              {story.genres.map((g) => (
-                <Link key={g} to={`/the-loai/${g}`} data-testid={`story-genre-${g}`} className="text-[11px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors">
-                  {genreName(g)}
-                </Link>
-              ))}
-              <span className={`text-[11px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${story.status === 'Hoàn thành' ? 'border-gold/40 bg-gold/15 text-gold' : 'border-white/15 text-ash'}`}>
-                {story.status}
+            <div className="glass rounded-2xl p-6 text-center" data-testid="author-card">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-gold mb-4">Tác giả</p>
+              <span className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-gold to-blood flex items-center justify-center font-display text-2xl font-bold text-obsidian">
+                {story.author[0]}
               </span>
-            </div>
-            <h1 className="font-display text-4xl md:text-6xl font-bold text-bone leading-tight">{story.title}</h1>
-            <p className="text-ash mt-4 flex items-center gap-2 text-sm">
-              <User size={15} className="text-gold/70" /> {story.author}
-            </p>
-            <div className="flex flex-wrap gap-7 mt-7 text-sm text-ash">
-              <span className="flex items-center gap-2"><Eye size={16} className="text-gold/70" />{story.views} lượt đọc</span>
-              <span className="flex items-center gap-2"><Star size={16} weight="fill" className="text-[#F8C93A]" />{story.rating}/5</span>
-              <span className="flex items-center gap-2"><ListBullets size={16} className="text-gold/70" />{story.chaptersCount} chương</span>
-              <span className="flex items-center gap-2"><Clock size={16} className="text-gold/70" />{story.updated}</span>
-            </div>
-            <p className="mt-8 text-bone/85 leading-[1.9] text-base md:text-lg font-light max-w-3xl">{story.desc}</p>
-            <div className="flex flex-wrap gap-2 mt-6">
-              {story.tags.map((t) => (
-                <span key={t} className="text-xs text-ash border border-white/10 rounded-full px-3 py-1">#{t}</span>
-              ))}
+              <p className="font-display text-xl font-semibold text-bone mt-3">{story.author}</p>
+              <p className="text-xs text-ash mt-1">{story.tags[0]} · {story.status}</p>
+              <button
+                data-testid="follow-author-btn"
+                onClick={() => toast.success('Đã theo dõi tác giả (demo)')}
+                className="mt-4 w-full py-2.5 rounded-full border border-gold/40 text-gold text-[11px] font-bold uppercase tracking-widest hover:bg-gold hover:text-obsidian transition-[background-color,color] duration-300"
+              >
+                Theo dõi
+              </button>
             </div>
           </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="mt-14">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-display text-2xl md:text-3xl font-semibold text-bone">Danh sách chương</h2>
-                <Link to={`/doc/${story.slug}/${story.chapters.length}`} data-testid="read-latest-btn" className="text-xs uppercase tracking-[0.2em] text-gold hover:underline">
-                  Đọc chương mới nhất →
-                </Link>
+          <Reveal delay={0.08}>
+            <div className="glass rounded-2xl p-6" data-testid="genre-card">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-gold mb-4">Thể loại</p>
+              <div className="flex flex-wrap gap-2">
+                {story.genres.map((g) => (
+                  <Link key={g} to={`/the-loai/${g}`} data-testid={`story-genre-${g}`} className="text-[11px] uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-gold/30 text-gold hover:bg-gold/10 transition-colors">
+                    {genreName(g)}
+                  </Link>
+                ))}
               </div>
-              <div className="grid md:grid-cols-2 gap-x-8">
-                {story.chapters.map((c, i) => (
-                  <motion.div key={c.num} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05, duration: 0.5 }}>
-                    <Link
-                      to={`/doc/${story.slug}/${c.num}`}
-                      data-testid={`chapter-link-${c.num}`}
-                      className="group flex items-center justify-between gap-4 py-4 border-b border-white/8 hover:bg-gold/[0.04] hover:pl-3 transition-[background-color,padding] duration-300 rounded-md"
-                    >
-                      <span className="flex items-center gap-4 min-w-0">
-                        <span className="font-display text-lg text-stroke-faint group-hover:text-gold transition-colors w-8 shrink-0">{String(c.num).padStart(2, '0')}</span>
-                        <span className="text-sm md:text-base text-bone/85 group-hover:text-gold transition-colors truncate">{c.title}</span>
-                      </span>
-                      <span className="text-xs text-ash shrink-0">{c.time}</span>
-                    </Link>
-                  </motion.div>
+              <div className="flex flex-wrap gap-1.5 mt-4">
+                {story.tags.map((t) => (
+                  <span key={t} className="text-[11px] text-ash border border-white/10 rounded-full px-2.5 py-1">#{t}</span>
                 ))}
               </div>
             </div>
           </Reveal>
+        </div>
+
+        <div className="order-1 lg:order-2">
+          <Reveal><TiltCover story={story} /></Reveal>
+          <Reveal delay={0.08}>
+            <div className="text-center mt-8">
+              <span className={`inline-block text-[11px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border mb-4 ${story.status === 'Hoàn thành' ? 'border-gold/40 bg-gold/15 text-gold' : 'border-white/15 text-ash'}`}>
+                {story.status}
+              </span>
+              <h1 className="font-display text-4xl md:text-5xl font-bold text-bone leading-tight">{story.title}</h1>
+              <div className="flex flex-wrap justify-center gap-3 mt-7">
+                <Link
+                  to={`/doc/${story.slug}/1`}
+                  data-testid="read-from-start-btn"
+                  className="px-8 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:shadow-[0_0_35px_rgba(34,200,234,0.45)] transition-shadow duration-300"
+                >
+                  <BookOpen size={15} weight="bold" /> Đọc từ đầu
+                </Link>
+                <Link
+                  to={`/doc/${story.slug}/${story.chapters.length}`}
+                  data-testid="read-latest-btn"
+                  className="px-7 py-3.5 rounded-full border border-white/20 text-bone text-xs font-bold uppercase tracking-wider hover:border-gold/60 hover:text-gold transition-colors duration-300"
+                >
+                  Đọc mới nhất
+                </Link>
+                <button
+                  data-testid="favorite-toggle-btn"
+                  onClick={onFav}
+                  className={`px-4 rounded-full border flex items-center justify-center transition-colors duration-300 ${fav ? 'bg-blood/30 border-blood text-red-300' : 'border-white/20 text-ash hover:border-blood hover:text-red-300'}`}
+                  aria-label="Yêu thích"
+                >
+                  <Heart size={18} weight={fav ? 'fill' : 'regular'} />
+                </button>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+
+        <div className="flex flex-col gap-5 order-3">
+          <Reveal delay={0.12}>
+            <div className="glass rounded-2xl p-6" data-testid="rank-card">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-gold mb-3">Bảng xếp hạng</p>
+              <p className="font-display text-4xl font-bold text-bone flex items-center gap-3">
+                <TrendUp size={26} className="text-gold" weight="bold" /> #{rank > 0 ? rank : '—'}
+              </p>
+              <p className="text-xs text-ash mt-1.5">trên bảng Top đọc nhiều</p>
+              <Link to="/top" className="inline-block mt-4 text-[11px] uppercase tracking-[0.2em] text-gold hover:underline">Xem đài vinh danh →</Link>
+            </div>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <div className="glass rounded-2xl p-6" data-testid="views-card">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-gold mb-3">Lượt xem</p>
+              <p className="font-display text-4xl font-bold text-bone flex items-center gap-3">
+                <Eye size={26} className="text-gold" /> {story.views}
+              </p>
+              <div className="mt-4 space-y-2.5 text-sm text-ash">
+                <p className="flex items-center gap-2"><Star size={15} weight="fill" className="text-[#F8C93A]" /> {story.rating}/5 đánh giá</p>
+                <p className="flex items-center gap-2"><Heart size={15} weight={fav ? 'fill' : 'regular'} className="text-blood" /> {likesOf(story.views)} lượt thích{fav ? ' (có bạn)' : ''}</p>
+                <p className="flex items-center gap-2"><ListBullets size={15} className="text-gold/70" /> {story.chaptersCount} chương</p>
+                <p className="flex items-center gap-2"><Clock size={15} className="text-gold/70" /> {story.updated}</p>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div className="glass rounded-2xl p-6" data-testid="content-card">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-gold mb-3">Nội dung</p>
+              <p className="text-sm text-bone/85 leading-[1.85] font-light">{story.desc}</p>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
+      <div className="mt-24 max-w-4xl mx-auto" data-testid="chapter-roadmap">
+        <Reveal><h2 className="font-display text-3xl md:text-4xl font-semibold text-bone text-center">Lộ trình chương mới</h2></Reveal>
+        <div className="relative mt-12">
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 border-l-2 border-dashed border-gold/30" />
+          {story.chapters.map((c, i) => (
+            <Reveal key={c.num} delay={i * 0.08} y={28}>
+              <div className={`relative pl-12 md:pl-0 md:w-1/2 mb-8 ${i % 2 ? 'md:ml-auto md:pl-14' : 'md:pr-14'}`}>
+                <span className={`absolute top-7 w-4 h-4 rounded-full bg-gold shadow-[0_0_14px_rgba(34,200,234,0.8)] left-[9px] ${i % 2 ? 'md:-left-[9px]' : 'md:left-auto md:-right-[9px]'}`} />
+                <Link
+                  to={`/doc/${story.slug}/${c.num}`}
+                  data-testid={`chapter-link-${c.num}`}
+                  className="block glass rounded-2xl p-5 hover:border-gold/50 hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(34,200,234,0.15)] transition-[transform,border-color,box-shadow] duration-300 group"
+                >
+                  <span className="flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-gold">
+                    Chap mới cập nhật <span className="text-ash normal-case tracking-normal">{c.time}</span>
+                  </span>
+                  <h4 className="font-display text-xl font-semibold text-bone mt-2 group-hover:text-gold transition-colors">{c.title}</h4>
+                  <span className="text-xs text-ash mt-2 inline-flex items-center gap-1.5 group-hover:text-gold transition-colors">
+                    Đọc ngay <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </span>
+                </Link>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-24 max-w-4xl mx-auto" data-testid="comments-section">
+        <Reveal>
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-7">
+            <h2 className="font-display text-3xl md:text-4xl font-semibold text-bone flex items-center gap-3">
+              <ChatCircle size={26} weight="duotone" className="text-gold" /> Bình luận
+              <span className="text-lg text-ash font-normal">({comments.length})</span>
+            </h2>
+            <div className="flex gap-2">
+              <span className="px-4 py-2 rounded-full bg-gold/15 border border-gold/40 text-gold text-[11px] font-bold uppercase tracking-wider">Theo lượt mới</span>
+              <span className="px-4 py-2 rounded-full border border-white/15 text-ash text-[11px] uppercase tracking-wider">Chap {story.chaptersCount}</span>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <form onSubmit={onComment} className="glass rounded-2xl p-3 flex items-center gap-3">
+            <span className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-blood flex items-center justify-center font-display font-bold text-obsidian shrink-0">B</span>
+            <input
+              data-testid="comment-input"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              placeholder="Chia sẻ cảm nghĩ của bạn về truyện..."
+              className="flex-1 bg-transparent outline-none text-sm text-bone placeholder:text-ash/60"
+            />
+            <button type="submit" data-testid="comment-submit-btn" className="w-10 h-10 rounded-full bg-gold text-obsidian flex items-center justify-center hover:shadow-[0_0_20px_rgba(34,200,234,0.5)] transition-shadow" aria-label="Gửi bình luận">
+              <PaperPlaneTilt size={16} weight="bold" />
+            </button>
+          </form>
+        </Reveal>
+        <div className="mt-6 space-y-4">
+          {comments.map((c, i) => (
+            <Reveal key={`${c.name}-${i}`} delay={i * 0.05} y={20}>
+              <div className="glass rounded-2xl p-5 flex gap-4 hover:border-gold/30 transition-colors duration-300" data-testid={`comment-item-${i}`}>
+                <span
+                  className="w-11 h-11 rounded-full shrink-0 flex items-center justify-center font-display font-bold text-obsidian text-lg"
+                  style={{ background: `linear-gradient(135deg, hsl(${(i * 67) % 360} 60% 55%), hsl(${(i * 67 + 40) % 360} 65% 40%))` }}
+                >
+                  {c.name[0]}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="flex flex-wrap items-center gap-2.5">
+                    <span className="text-sm font-bold text-gold/90">{c.name}</span>
+                    <span className="text-[11px] text-ash/70">{c.time}</span>
+                  </p>
+                  <p className="text-sm text-bone/85 leading-relaxed mt-1.5">{c.text}</p>
+                  <button type="button" data-testid={`comment-like-${i}`} onClick={() => likeComment(i)} className="mt-2.5 inline-flex items-center gap-1.5 text-xs text-ash hover:text-gold transition-colors">
+                    <ThumbsUp size={13} weight={c.liked ? 'fill' : 'regular'} className={c.liked ? 'text-gold' : ''} /> Thích · {c.likes}
+                  </button>
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
 
