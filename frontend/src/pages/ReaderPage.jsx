@@ -143,11 +143,7 @@ export default function ReaderPage() {
                 <CoverArt story={story} showTitle={false} />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/30" />
-              <p className="relative text-[10px] uppercase tracking-[0.5em] text-gold mb-5 drop-shadow">TOONIX</p>
-              <h2 className="relative font-display text-3xl md:text-4xl font-bold text-bone leading-tight drop-shadow-lg">{story.title}</h2>
-              <p className="relative font-display italic text-gold mt-4 text-lg drop-shadow">{chapter.title}</p>
-              <div className="relative w-14 h-px bg-gold/50 my-6" />
-              <p className="relative text-xs text-bone/70 tracking-widest uppercase drop-shadow">{story.author}</p>
+              <p className="relative text-[10px] uppercase tracking-[0.5em] text-gold drop-shadow">TOONIX</p>
               <p className="absolute bottom-6 text-[10px] text-bone/60 uppercase tracking-[0.3em] animate-pulse-gold">Lật trang để bắt đầu →</p>
             </div>
             {panels ? (
