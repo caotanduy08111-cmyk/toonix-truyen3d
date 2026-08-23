@@ -107,7 +107,7 @@ export default function ReaderPage() {
           initial={{ opacity: 0, rotateY: -28, scale: 0.94 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="book-stage relative w-full max-w-[1160px] h-[68vh] min-h-[520px] -mt-4"
+          className="book-stage relative w-full max-w-[980px] h-[64vh] min-h-[440px] -mt-4"
         >
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[60%] blur-[100px] rounded-full pointer-events-none"
@@ -115,13 +115,13 @@ export default function ReaderPage() {
           />
           <HTMLFlipBook
             ref={bookRef}
-            width={520}
-            height={700}
+            width={480}
+            height={660}
             size="stretch"
-            minWidth={300}
-            maxWidth={560}
-            minHeight={460}
-            maxHeight={780}
+            minWidth={280}
+            maxWidth={470}
+            minHeight={400}
+            maxHeight={640}
             showCover
             drawShadow
             flippingTime={900}
