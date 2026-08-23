@@ -1,6 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+
+const heroBolt = (seed) => {
+  let d = `M ${120 + seed * 60} -20`;
+  let x = 120 + seed * 60;
+  for (let y = 30; y <= 280; y += 38) {
+    x += ((seed * 71 + y * 13) % 90) - 45;
+    d += ` L ${Math.round(Math.max(20, Math.min(780, x)))} ${y}`;
+  }
+  return d;
+};
 import { ArrowRight, BookOpen, Crown, Eye, Fire, Star } from '@phosphor-icons/react';
 import { STORIES, topStories, fullStories, GENRES, genreName, byGenre } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
@@ -30,6 +40,12 @@ const Hero = () => {
     return () => window.removeEventListener('mousemove', move);
   }, [mx, my]);
 
+  const [strike, setStrike] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setStrike((s) => s + 1), 4500);
+    return () => clearInterval(t);
+  }, []);
+
   const logoRx = useSpring(useTransform(my, [-0.5, 0.5], [9, -9]), { stiffness: 60, damping: 15 });
   const logoRy = useSpring(useTransform(mx, [-0.5, 0.5], [-13, 13]), { stiffness: 60, damping: 15 });
 
@@ -58,10 +74,43 @@ const Hero = () => {
               src="/logo.png"
               alt="TOONIX — Infinite Story Universe"
               data-testid="hero-logo"
-              animate={{ y: [0, -14, 0] }}
+              animate={{
+                y: [0, -14, 0],
+                filter: [
+                  'brightness(1) drop-shadow(0 0 20px rgba(34,200,234,0.45)) drop-shadow(0 0 55px rgba(34,200,234,0.22))',
+                  'brightness(1.14) drop-shadow(0 0 34px rgba(34,200,234,0.75)) drop-shadow(0 0 95px rgba(34,200,234,0.42))',
+                  'brightness(1) drop-shadow(0 0 20px rgba(34,200,234,0.45)) drop-shadow(0 0 55px rgba(34,200,234,0.22))',
+                ],
+              }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-[80vw] max-w-[620px] h-auto drop-shadow-[0_0_45px_rgba(34,200,234,0.45)]"
+              className="w-[80vw] max-w-[620px] h-auto"
             />
+            <AnimatePresence>
+              {strike > 0 && (
+                <motion.div
+                  key={strike}
+                  className="absolute -inset-8 bg-[radial-gradient(circle_at_50%_50%,rgba(34,200,234,0.32),transparent_65%)] pointer-events-none"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ duration: 0.5 }}
+                />
+              )}
+            </AnimatePresence>
+            <svg key={`bolt-${strike}`} className="absolute -inset-[10%] w-[120%] h-[120%] pointer-events-none" viewBox="0 0 800 260" preserveAspectRatio="none">
+              {[0, 1].map((i) => (
+                <path
+                  key={i}
+                  d={heroBolt((strike + i) % 5)}
+                  pathLength="1"
+                  className="hero-bolt"
+                  stroke={i ? '#4DD8F0' : '#EEF4FF'}
+                  strokeWidth={i ? 2.2 : 3.4}
+                  fill="none"
+                  strokeLinecap="round"
+                  style={{ filter: 'drop-shadow(0 0 6px #22C8EA) drop-shadow(0 0 18px #22C8EA)', animationDelay: `${i * 0.12}s` }}
+                />
+              ))}
+            </svg>
             <div className="absolute -inset-12 bg-[radial-gradient(closest-side,rgba(34,200,234,0.22),transparent)] blur-2xl -z-10 animate-pulse-gold" />
           </motion.div>
         </div>
@@ -149,18 +198,16 @@ const FeaturedGrid = () => {
   const feats = STORIES.filter((s) => s.featured);
   return (
     <section className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 py-24 md:py-32" data-testid="featured-section">
-      <Reveal><SectionHeading kicker="Tuyển chọn" title="Kiệt tác đáng đọc" link="/danh-sach" /></Reveal>
-      <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-6">
-        <Reveal className="col-span-2 md:col-span-5 md:row-span-2">
+      <Reveal><SectionHeading kicker="Tuyển chọn" title="Truyện đề cử" link="/danh-sach" /></Reveal>
+      <div className="grid lg:grid-cols-2 gap-4 md:gap-6">
+        <Reveal className="h-full">
           <StoryCard story={feats[0]} className="h-full [&>div]:h-full [&>div]:aspect-auto" tall />
         </Reveal>
-        <Reveal delay={0.08} className="col-span-1 md:col-span-4"><StoryCard story={feats[1]} /></Reveal>
-        <Reveal delay={0.16} className="col-span-1 md:col-span-3"><StoryCard story={feats[2]} /></Reveal>
-        <Reveal delay={0.12} className="col-span-1 md:col-span-3"><StoryCard story={feats[3]} /></Reveal>
-        <Reveal delay={0.2} className="col-span-1 md:col-span-2"><StoryCard story={feats[4]} /></Reveal>
-        <Reveal delay={0.26} className="col-span-2 md:col-span-2">
-          <LinkCard to="/danh-sach" label="Khám phá thêm" sub={`${STORIES.length}+ bộ truyện`} testid="featured-view-all-card" />
-        </Reveal>
+        <div className="grid grid-cols-2 gap-4 md:gap-6">
+          {feats.slice(1, 5).map((s, i) => (
+            <Reveal key={s.slug} delay={0.08 + i * 0.07}><StoryCard story={s} /></Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -9,6 +9,21 @@
 
 /* Cloud speech bubble for comic pages */
 .cloud-bubble {
+/* Hero logo lightning strike (CSS-driven, replays on remount) */
+.hero-bolt {
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 1;
+    opacity: 0;
+    animation: bolt-strike 0.8s ease-out forwards;
+}
+@keyframes bolt-strike {
+    0% { stroke-dashoffset: 1; opacity: 0; }
+    15% { opacity: 1; }
+    45% { stroke-dashoffset: 0; }
+    75% { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
     position: absolute;
     background: #fdfbf4;
     color: #16203a;

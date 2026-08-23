@@ -22,7 +22,7 @@
 - Trang Top (/top) thiết kế lại theo wireframe: Đài Vinh Danh podium Top3-Top1-Top2 (Top1 giữa to hơn, vương miện bay, hào quang), mục Top ngày (lưới 6 thẻ + panel tab Top ngày/tuần/tháng), mục Top tháng (lưới 6 + danh sách Top tuần) — TopPage.jsx, route thay ListPage kind=top
 - LinkCard dùng chung (/src/components/LinkCard.jsx): thẻ icon mũi tên phát sáng nối trang — dạng tile ở Kiệt tác/Mới cập nhật/dải Thể loại, dạng bar ngang dưới Bảng xếp hạng
 - REBRAND: Logo TOONIX (chuyển từ file .ai → PNG nền trong suốt, /public/logo.png) thay logo cũ ở Navbar/Footer/trang đọc; title tab = "TOONIX — Infinite Story Universe"
-- Hero trang chủ: logo TOONIX lớn phát sáng làm tâm điểm, xoay 3D theo chuột (rotateX/rotateY springs) + float nhịp nhàng + hào quang cyan
+- Hero trang chủ: logo TOONIX lớn phát sáng làm tâm điểm, xoay 3D theo chuột (rotateX/rotateY springs) + float nhịp nhàng; hào quang BÁM THEO NÉT CHỮ (drop-shadow đa lớp, thở nhịp 6s); tia sét CSS keyframes (.hero-bolt) đánh zigzag qua logo mỗi 4,5 giây kèm chớp sáng
 - LightningIntro (/src/components/LightningIntro.jsx): intro 2.6s khi mở trang chủ lần đầu mỗi session — logo TOONIX flicker điện + 4 tia sét cyan SVG (pathLength animation, lặp 3 lần) đánh qua chữ + flash nền, chạm để bỏ qua, lưu sessionStorage
 - Trang truyện: banner ngang đầu trang từ chính ảnh bìa (blur + ken-burns zoom chậm 26s + gradient fade), tên truyện khổng lồ mờ nền, bìa truyện xếp chồm lên banner
 - Đổi toàn bộ tone màu sang bảng màu người dùng: nền #020817, surface #121C38, border #1E2C50, chữ #EEF4FF/#93A4C9, accent cyan #22C8EA/#4DD8F0, xanh #4891E7, sao đánh giá vàng #F8C93A, danger #E0554A
