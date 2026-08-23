@@ -95,7 +95,7 @@ export default function ReaderPage() {
         </div>
       </div>
 
-      <div className="text-center mt-4 mb-2 px-4">
+      <div className="text-center -mt-3 mb-1 px-4">
         <p className="text-[11px] uppercase tracking-[0.4em] text-gold/80">{chapter.title.split(':')[0]}</p>
         <h1 className="font-display text-xl md:text-2xl text-bone/90 italic mt-1">{chapter.title.split(':')[1]?.trim()}</h1>
       </div>
@@ -107,7 +107,7 @@ export default function ReaderPage() {
           initial={{ opacity: 0, rotateY: -28, scale: 0.94 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="book-stage relative w-full max-w-[1160px] h-[68vh] min-h-[520px]"
+          className="book-stage relative w-full max-w-[1160px] h-[68vh] min-h-[520px] -mt-4"
         >
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[60%] blur-[100px] rounded-full pointer-events-none"
