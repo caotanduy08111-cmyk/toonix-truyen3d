@@ -15,7 +15,8 @@
 - State client (favorites/history/user demo): localStorage qua `/app/frontend/src/lib/store.js`
 - Design: Dark Cinematic Fantasy — obsidian #050505, gold #D4AF37, blood #8A1C1C; Cormorant Garamond (headings) + Manrope (body); grain overlay toàn site
 
-## Đã triển khai (19/08/2026)
+- Đọc truyện yêu cầu tài khoản: RequireAuth guard ở route /doc/:slug/:num — chưa đăng nhập bị chuyển sang /dang-nhap kèm thông báo, đăng nhập/đăng ký xong quay lại đúng trang đang đọc (location.state.from)
+- Đọc truyện 3D lật sách:
 - Trang đọc: CHẾ ĐỘ TRUYỆN TRANH — 18 bộ có 2 trang manga full-page do AI (Gemini Nano Banana qua Emergent LLM key) tạo riêng theo cốt truyện (/public/panels, /app/scripts/gen_panels.py, map ở /src/data/panels.js), lời truyện đặt trong khung đám mây nhỏ (class .cloud-bubble, tối đa ~110 ký tự/bong bóng, không che tranh); truyện chưa có tranh dùng chế độ chữ + minh họa (layout absolute vì thư viện lật sách ép display:block). Hết ngân sách key nên 2 bộ chưa có tranh: toi-khong-phai-an-tuong-hon, lan-nua-toa-sang (chạy lại gen_panels.py sau khi nạp thêm credit) ReaderAmbience — hiệu ứng không khí theo thể loại (tiên/kiếm hiệp: luồng kiếm khí bay lên, huyền huyễn: hạt lấp lánh, kinh dị: sương đỏ trôi, đô thị: mưa neon rơi, khoa huyễn: bụi sao, lãng mạn: cánh hoa hồng rơi, hài hước: bong bóng bay); sách mở vào với hiệu ứng xoay 3D + hào quang màu theo hue truyện
 - Bảng xếp hạng trang chủ: mỗi hàng có ảnh bìa thu nhỏ; Top 1 là thẻ "quán quân" riêng — vương miện bay, bìa lớn phát sáng, viền cyan, tia sáng quét ngang lặp vô hạn
 - Trang chi tiết truyện theo wireframe: 3 cột SÁT ảnh bìa (Tác giả+Thể loại | Bìa 3D+Tên truyện+Đọc từ đầu | Bảng xếp hạng+Lượt xem+Nội dung), "Lộ trình chương mới" là ĐƯỜNG CONG S bằng SVG vẽ dần khi cuộn tới (pathLength animation, node tròn sáng), thẻ chương so le trái/phải, mục Bình luận (đăng/thích bình luận demo, sắp theo lượt mới + pill chap)

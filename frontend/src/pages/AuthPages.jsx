@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, EnvelopeSimple, FacebookLogo, GoogleLogo, LockSimple, User as UserIcon } from '@phosphor-icons/react';
 import { toast } from 'sonner';
@@ -65,6 +65,8 @@ export function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from;
 
   const submit = (e) => {
     e.preventDefault();
@@ -72,8 +74,8 @@ export function LoginPage() {
     setLoading(true);
     setTimeout(() => {
       setUser({ name: form.email.split('@')[0], email: form.email });
-      toast.success('Đăng nhập thành công (bản demo)');
-      navigate('/ho-so');
+      toast.success('Đăng nhập thành công — chúc bạn đọc truyện vui!');
+      navigate(from || '/ho-so');
     }, 800);
   };
 
@@ -83,6 +85,12 @@ export function LoginPage() {
         <p className="text-xs uppercase tracking-[0.4em] text-gold mb-3">Chào mừng trở lại</p>
         <h1 className="font-display text-4xl md:text-5xl font-bold text-bone">Đăng nhập</h1>
         <p className="text-sm text-ash mt-3">Bản demo — nhập email bất kỳ để trải nghiệm.</p>
+        {from && (
+          <div className="mt-4 rounded-xl border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-gold flex items-center gap-2.5" data-testid="login-required-notice">
+            <BookOpen size={16} weight="duotone" className="shrink-0" />
+            Tạo tài khoản hoặc đăng nhập để bắt đầu đọc truyện nhé!
+          </div>
+        )}
         <form onSubmit={submit} className="space-y-4 mt-9">
           <Field icon={EnvelopeSimple} data-testid="login-email-input" type="email" placeholder="Email của bạn" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
           <Field icon={LockSimple} data-testid="login-password-input" type="password" placeholder="Mật khẩu" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
@@ -115,6 +123,8 @@ export function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from;
 
   const submit = (e) => {
     e.preventDefault();
@@ -123,8 +133,8 @@ export function RegisterPage() {
     setLoading(true);
     setTimeout(() => {
       setUser({ name: form.name, email: form.email });
-      toast.success('Tạo tài khoản thành công (bản demo)');
-      navigate('/ho-so');
+      toast.success('Tạo tài khoản thành công — chúc bạn đọc truyện vui!');
+      navigate(from || '/ho-so');
     }, 800);
   };
 

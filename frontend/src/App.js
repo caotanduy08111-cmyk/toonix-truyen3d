@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Lenis from 'lenis';
 import { Toaster } from 'sonner';
@@ -15,6 +15,15 @@ import ListPage from '@/pages/ListPage';
 import ProfilePage from '@/pages/ProfilePage';
 import TopPage from '@/pages/TopPage';
 import { LoginPage, RegisterPage } from '@/pages/AuthPages';
+import { getUser } from '@/lib/store';
+
+const RequireAuth = ({ children }) => {
+  const location = useLocation();
+  if (!getUser()) {
+    return <Navigate to="/dang-nhap" state={{ from: location.pathname }} replace />;
+  }
+  return children;
+};
 
 let lenisInstance = null;
 
@@ -62,7 +71,7 @@ const AnimatedRoutes = () => {
           <Route path="/top" element={<PageShell testid="page-top"><TopPage /></PageShell>} />
           <Route path="/lich-su" element={<PageShell testid="page-history"><ListPage kind="history" /></PageShell>} />
           <Route path="/truyen/:slug" element={<PageShell testid="page-story"><StoryPage /></PageShell>} />
-          <Route path="/doc/:slug/:num" element={<ReaderPage />} />
+          <Route path="/doc/:slug/:num" element={<RequireAuth><ReaderPage /></RequireAuth>} />
           <Route path="/dang-nhap" element={<PageShell testid="page-login"><LoginPage /></PageShell>} />
           <Route path="/dang-ky" element={<PageShell testid="page-register"><RegisterPage /></PageShell>} />
           <Route path="/ho-so" element={<PageShell testid="page-profile"><ProfilePage /></PageShell>} />
