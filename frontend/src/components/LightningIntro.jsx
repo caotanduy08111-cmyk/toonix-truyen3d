@@ -64,17 +64,16 @@ export const LightningIntro = () => {
             />
             <svg className="absolute -inset-[12%] w-[124%] h-[124%]" viewBox="0 0 800 420" preserveAspectRatio="none">
               {bolts.map((d, i) => (
-                <motion.path
+                <path
                   key={i}
                   d={d}
-                  stroke={i % 2 ? '#4DD8F0' : '#22C8EA'}
+                  pathLength="1"
+                  className="hero-bolt"
+                  stroke={i % 2 ? '#4DD8F0' : '#EEF4FF'}
                   strokeWidth={i % 2 ? 2 : 3.2}
-                  strokeLinecap="round"
                   fill="none"
-                  style={{ filter: 'drop-shadow(0 0 5px #22C8EA) drop-shadow(0 0 16px #22C8EA)' }}
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: [0, 1, 1], opacity: [0, 1, 0] }}
-                  transition={{ duration: 0.5, delay: 0.35 + i * 0.35, times: [0, 0.35, 1], ease: 'easeOut', repeat: 3, repeatDelay: 0.12 }}
+                  strokeLinecap="round"
+                  style={{ filter: 'drop-shadow(0 0 5px #22C8EA) drop-shadow(0 0 16px #22C8EA)', animationDelay: `${0.35 + i * 0.35}s` }}
                 />
               ))}
             </svg>
