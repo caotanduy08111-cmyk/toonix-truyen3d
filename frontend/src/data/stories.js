@@ -92,6 +92,7 @@ export const STORIES = [
 ];
 
 STORIES.forEach((s, i) => {
+  if (!s.img) s.img = `/covers/${s.slug}.png`;
   s.chapters = buildChapters(i, 4, s.slug);
   s.featured = i < 5;
   s.score = parseFloat(s.views) * (s.status === 'Hoàn thành' ? 1.15 : 1);
