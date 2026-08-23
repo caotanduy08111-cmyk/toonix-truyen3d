@@ -387,7 +387,7 @@ const Manifesto = () => (
   <section className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 py-24 md:py-36" data-testid="manifesto-section">
     <Reveal>
       <p className="font-display italic text-3xl md:text-5xl lg:text-6xl leading-snug text-bone max-w-4xl">
-        “Mỗi cuốn sách là một cánh cửa. <span className="text-gold">Chúng tôi chỉ làm cho cánh cửa ấy mở ra chậm rãi hơn</span> — đủ để bạn nghe thấy tiếng thế giới bên kia đang thở.”
+        “Mỗi cuốn sách là một cánh cửa. <span className="text-gold">Chúng tôi chỉ làm cho cánh cửa ấy mở ra chậm rãi hơn</span>, đủ để bạn nghe thấy tiếng thế giới bên kia đang thở.”
       </p>
     </Reveal>
     <div className="grid md:grid-cols-3 gap-10 md:gap-14 mt-20">
