@@ -163,21 +163,21 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      <div className="absolute right-[6%] top-[16%] hidden xl:block w-[300px] z-[5]" style={{ perspective: 1100 }}>
-        <motion.div style={{ x: x1, y: y1 }} className="absolute top-0 right-24 w-44 rotate-[8deg] animate-floaty">
-          <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/30 gold-glow">
+      <div className="absolute right-[7%] top-[12%] hidden xl:block w-[430px] z-[5]" style={{ perspective: 1100 }}>
+        <motion.div style={{ x: x1, y: y1 }} className="absolute top-0 -left-14 w-56 rotate-[8deg] animate-floaty">
+          <motion.div animate={{ scale: [1, 1.12, 1], x: [0, -46, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/30 gold-glow">
             <CoverArt story={STORIES[3]} />
-          </div>
+          </motion.div>
         </motion.div>
-        <motion.div style={{ x: x2, y: y2 }} className="absolute top-40 right-[-10px] w-52 -rotate-[6deg] animate-floaty [animation-delay:1.4s]">
-          <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/15 shadow-2xl">
+        <motion.div style={{ x: x2, y: y2 }} className="absolute top-52 right-[-8px] w-60 -rotate-[6deg] animate-floaty [animation-delay:1.4s]">
+          <motion.div animate={{ scale: [1.08, 0.95, 1.08], x: [0, -64, 0] }} transition={{ duration: 8.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/15 shadow-2xl">
             <CoverArt story={STORIES[0]} />
-          </div>
+          </motion.div>
         </motion.div>
-        <motion.div style={{ x: x1, y: y2 }} className="absolute top-[420px] right-40 w-36 rotate-[14deg] animate-floaty [animation-delay:2.6s]">
-          <div className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 opacity-80">
+        <motion.div style={{ x: x1, y: y2 }} className="absolute top-[500px] left-2 w-48 rotate-[14deg] animate-floaty [animation-delay:2.6s]">
+          <motion.div animate={{ scale: [0.95, 1.14, 0.95], x: [0, -38, 0] }} transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 opacity-90">
             <CoverArt story={STORIES[5]} />
-          </div>
+          </motion.div>
         </motion.div>
       </div>
 
