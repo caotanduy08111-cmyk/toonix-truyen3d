@@ -14,13 +14,12 @@
     stroke-dasharray: 1 1;
     stroke-dashoffset: 1;
     opacity: 0;
-    animation: bolt-strike 0.8s ease-out forwards;
+    animation: bolt-strike 0.5s ease-out forwards;
 }
 @keyframes bolt-strike {
     0% { stroke-dashoffset: 1; opacity: 0; }
-    15% { opacity: 1; }
-    45% { stroke-dashoffset: 0; }
-    75% { opacity: 1; }
+    20% { opacity: 1; }
+    55% { stroke-dashoffset: 0; opacity: 1; }
     100% { stroke-dashoffset: 0; opacity: 0; }
 }
 
