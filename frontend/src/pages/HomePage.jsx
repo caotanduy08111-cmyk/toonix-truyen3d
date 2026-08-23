@@ -339,38 +339,46 @@ const GenreStrip = () => (
     <div className="max-w-[1440px] mx-auto px-5 md:px-10">
       <Reveal><SectionHeading kicker="Thế giới" title="Chọn cõi mơ của bạn" link="/the-loai" /></Reveal>
     </div>
-    <div className="flex gap-5 overflow-x-auto no-scrollbar px-5 md:px-10 pb-4 snap-x">
-      {GENRES.map((g, i) => (
-        <Reveal key={g.slug} delay={i * 0.05} className="snap-start shrink-0">
-          <Link
-            to={`/the-loai/${g.slug}`}
-            data-testid={`genre-card-${g.slug}`}
-            className="group relative block w-[240px] md:w-[280px] h-[340px] rounded-2xl overflow-hidden border border-white/10 hover:border-gold/40 transition-colors duration-400"
-          >
-            <div className="absolute inset-0 bg-coal" />
-            {byGenre(g.slug)[0] && (
-              <div className="absolute inset-0 overflow-hidden opacity-25 blur-[2px] saturate-[0.7] group-hover:opacity-50 group-hover:blur-0 group-hover:saturate-100 group-hover:scale-105 transition-[opacity,filter,transform] duration-700">
-                <CoverArt story={byGenre(g.slug)[0]} showTitle={false} />
+    <div className="relative overflow-hidden marquee-hover pb-4" data-testid="genre-marquee">
+      <div className="flex w-max animate-marquee gap-5 px-5 md:px-10" style={{ animationDuration: '48s' }}>
+        {[0, 1].map((dup) => (
+          <div key={dup} className="flex gap-5" aria-hidden={dup === 1}>
+            {GENRES.map((g, i) => (
+              <div key={g.slug} className="shrink-0">
+                <Link
+                  to={`/the-loai/${g.slug}`}
+                  data-testid={dup === 0 ? `genre-card-${g.slug}` : undefined}
+                  className="group relative block w-[240px] md:w-[280px] h-[340px] rounded-2xl overflow-hidden border border-white/10 hover:border-gold/40 transition-colors duration-400"
+                >
+                  <div className="absolute inset-0 bg-coal" />
+                  {byGenre(g.slug)[0] && (
+                    <div className="absolute inset-0 overflow-hidden opacity-25 blur-[2px] saturate-[0.7] group-hover:opacity-50 group-hover:blur-0 group-hover:saturate-100 group-hover:scale-105 transition-[opacity,filter,transform] duration-700">
+                      <CoverArt story={byGenre(g.slug)[0]} showTitle={false} />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-obsidian/20" />
+                  <span className="absolute -right-6 -bottom-10 font-display text-[11rem] leading-none font-bold text-white/[0.05] group-hover:text-gold/15 transition-colors duration-500 select-none">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-6">
+                    <h3 className="font-display text-3xl font-semibold text-bone group-hover:text-gold transition-colors duration-300">{g.name}</h3>
+                    <p className="text-sm text-ash mt-2 leading-relaxed">{g.desc}</p>
+                    <span className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold/80 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-300">
+                      Khám phá <ArrowRight size={13} weight="bold" />
+                    </span>
+                  </div>
+                </Link>
               </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-obsidian/20" />
-            <span className="absolute -right-6 -bottom-10 font-display text-[11rem] leading-none font-bold text-white/[0.05] group-hover:text-gold/15 transition-colors duration-500 select-none">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6">
-              <h3 className="font-display text-3xl font-semibold text-bone group-hover:text-gold transition-colors duration-300">{g.name}</h3>
-              <p className="text-sm text-ash mt-2 leading-relaxed">{g.desc}</p>
-              <span className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold/80 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-300">
-                Khám phá <ArrowRight size={13} weight="bold" />
-              </span>
+            ))}
+            <div className="shrink-0">
+              <LinkCard to="/the-loai" label="Tất cả thể loại" sub={`${GENRES.length} cõi mơ`} testid={dup === 0 ? 'genre-view-all-card' : undefined} className="w-[240px] md:w-[280px] h-[340px] aspect-auto" />
             </div>
-          </Link>
-        </Reveal>
-      ))}
-      <Reveal delay={0.4} className="snap-start shrink-0">
-        <LinkCard to="/the-loai" label="Tất cả thể loại" sub={`${GENRES.length} cõi mơ`} testid="genre-view-all-card" className="w-[240px] md:w-[280px] h-[340px] aspect-auto" />
-      </Reveal>
+          </div>
+        ))}
+      </div>
+      <div className="absolute inset-y-0 left-0 w-20 md:w-36 bg-gradient-to-r from-obsidian to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-20 md:w-36 bg-gradient-to-l from-obsidian to-transparent z-10 pointer-events-none" />
     </div>
   </section>
 );
