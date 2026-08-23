@@ -75,7 +75,7 @@ export function LoginPage() {
     setTimeout(() => {
       setUser({ name: form.email.split('@')[0], email: form.email });
       toast.success('Đăng nhập thành công — chúc bạn đọc truyện vui!');
-      navigate(from || '/ho-so');
+      navigate('/');
     }, 800);
   };
 
@@ -123,8 +123,6 @@ export function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from;
 
   const submit = (e) => {
     e.preventDefault();
@@ -134,7 +132,7 @@ export function RegisterPage() {
     setTimeout(() => {
       setUser({ name: form.name, email: form.email });
       toast.success('Tạo tài khoản thành công — chúc bạn đọc truyện vui!');
-      navigate(from || '/ho-so');
+      navigate('/');
     }, 800);
   };
 
