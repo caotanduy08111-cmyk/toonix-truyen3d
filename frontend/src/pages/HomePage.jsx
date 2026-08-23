@@ -51,7 +51,7 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden" data-testid="hero-section">
-      <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-28 pb-16 w-full">
+      <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-28 pb-16 w-full pointer-events-none">
         <motion.p
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -128,7 +128,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.05, duration: 0.8 }}
-          className="mt-9 flex flex-wrap items-center gap-4"
+          className="mt-9 flex flex-wrap items-center gap-4 pointer-events-auto"
         >
           <Link
             to={`/doc/${STORIES[0].slug}/1`}
@@ -165,18 +165,27 @@ const Hero = () => {
 
       <div className="absolute right-[7%] top-[12%] hidden xl:block w-[430px] z-[5]" style={{ perspective: 1100 }}>
         <motion.div style={{ x: x1, y: y1 }} className="absolute top-0 -left-14 w-56 rotate-[8deg] animate-floaty">
-          <motion.div animate={{ scale: [1, 1.12, 1], x: [0, -46, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/30 gold-glow">
-            <CoverArt story={STORIES[3]} />
+          <motion.div animate={{ scale: [1, 1.12, 1], x: [0, -46, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/30 gold-glow group">
+            <Link to={`/truyen/${STORIES[3].slug}`} data-testid="hero-cover-link-1" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
+              <CoverArt story={STORIES[3]} />
+              <span className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-colors duration-300" />
+            </Link>
           </motion.div>
         </motion.div>
         <motion.div style={{ x: x2, y: y2 }} className="absolute top-52 right-[-8px] w-60 -rotate-[6deg] animate-floaty [animation-delay:1.4s]">
-          <motion.div animate={{ scale: [1.08, 0.95, 1.08], x: [0, -64, 0] }} transition={{ duration: 8.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/15 shadow-2xl">
-            <CoverArt story={STORIES[0]} />
+          <motion.div animate={{ scale: [1.08, 0.95, 1.08], x: [0, -64, 0] }} transition={{ duration: 8.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/15 shadow-2xl group">
+            <Link to={`/truyen/${STORIES[0].slug}`} data-testid="hero-cover-link-2" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
+              <CoverArt story={STORIES[0]} />
+              <span className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-colors duration-300" />
+            </Link>
           </motion.div>
         </motion.div>
         <motion.div style={{ x: x1, y: y2 }} className="absolute top-[500px] left-2 w-48 rotate-[14deg] animate-floaty [animation-delay:2.6s]">
-          <motion.div animate={{ scale: [0.95, 1.14, 0.95], x: [0, -38, 0] }} transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 opacity-90">
-            <CoverArt story={STORIES[5]} />
+          <motion.div animate={{ scale: [0.95, 1.14, 0.95], x: [0, -38, 0] }} transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 opacity-90 group">
+            <Link to={`/truyen/${STORIES[5].slug}`} data-testid="hero-cover-link-3" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
+              <CoverArt story={STORIES[5]} />
+              <span className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-colors duration-300" />
+            </Link>
           </motion.div>
         </motion.div>
       </div>
