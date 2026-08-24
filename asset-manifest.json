@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/toonixtruyentranh/static/css/main.ad7acad2.css",
-    "main.js": "/toonixtruyentranh/static/js/main.5d6f7a8d.js",
+    "main.js": "/toonixtruyentranh/static/js/main.075327b7.js",
     "index.html": "/toonixtruyentranh/index.html",
     "main.ad7acad2.css.map": "/toonixtruyentranh/static/css/main.ad7acad2.css.map",
-    "main.5d6f7a8d.js.map": "/toonixtruyentranh/static/js/main.5d6f7a8d.js.map"
+    "main.075327b7.js.map": "/toonixtruyentranh/static/js/main.075327b7.js.map"
   },
   "entrypoints": [
     "static/css/main.ad7acad2.css",
-    "static/js/main.5d6f7a8d.js"
+    "static/js/main.075327b7.js"
   ]
 }
