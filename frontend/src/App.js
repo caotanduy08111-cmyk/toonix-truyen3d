@@ -5,6 +5,7 @@ import Lenis from 'lenis';
 import { Toaster } from 'sonner';
 import '@/App.css';
 import { BackgroundFX } from '@/components/BackgroundFX';
+import { CursorFX } from '@/components/CursorFX';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import HomePage from '@/pages/HomePage';
@@ -90,6 +91,7 @@ function App() {
         <LenisProvider>
           <BackgroundFX />
           <div className="grain-overlay" />
+          <CursorFX />
           <AnimatedRoutes />
           <Toaster theme="dark" position="bottom-right" toastOptions={{ style: { background: '#121C38', border: '1px solid rgba(34,200,234,0.3)', color: '#EEF4FF' } }} />
         </LenisProvider>

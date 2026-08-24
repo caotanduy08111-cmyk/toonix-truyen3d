@@ -2,12 +2,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const makeBolt = (x0, seed, w = 800, h = 420) => {
+  const segments = 9;
   let d = `M ${x0} -30`;
   let x = x0;
-  for (let y = 30; y <= h + 30; y += 42) {
-    x += ((seed * 97 + y * 31) % 110) - 55;
+  let dir = seed % 2 === 0 ? 1 : -1;
+  for (let i = 1; i <= segments; i++) {
+    const y = -30 + (i * (h + 60)) / segments;
+    const amp = 24 + ((seed * 53 + i * 19) % 34);
+    x += dir * amp;
     x = Math.max(20, Math.min(w - 20, x));
-    d += ` L ${Math.round(x)} ${y}`;
+    d += ` L ${Math.round(x)} ${Math.round(y)}`;
+    dir *= -1;
   }
   return d;
 };
@@ -61,8 +66,12 @@ export const LightningIntro = () => {
               }}
               transition={{ duration: 2.3, times: [0, 0.18, 0.32, 0.5, 0.68, 1], ease: 'easeOut' }}
               className="w-full h-auto drop-shadow-[0_0_50px_rgba(34,200,234,0.55)]"
+              style={{
+                WebkitMaskImage: 'radial-gradient(ellipse 75% 60% at 50% 50%, #000 60%, transparent 100%)',
+                maskImage: 'radial-gradient(ellipse 75% 60% at 50% 50%, #000 60%, transparent 100%)',
+              }}
             />
-            <svg className="absolute -inset-[12%] w-[124%] h-[124%]" viewBox="0 0 800 420" preserveAspectRatio="none">
+            <svg className="absolute -inset-[12%] w-[124%] h-[124%] overflow-visible" viewBox="0 0 800 420" preserveAspectRatio="none">
               {bolts.map((d, i) => (
                 <path
                   key={i}
@@ -73,7 +82,7 @@ export const LightningIntro = () => {
                   strokeWidth={i % 2 ? 2 : 3.2}
                   fill="none"
                   strokeLinecap="round"
-                  style={{ filter: 'drop-shadow(0 0 5px #22C8EA) drop-shadow(0 0 16px #22C8EA)', animationDelay: `${0.35 + i * 0.35}s` }}
+                  style={{ animationDelay: `${0.35 + i * 0.35}s` }}
                 />
               ))}
             </svg>

@@ -9,6 +9,20 @@
 
 /* Cloud speech bubble for comic pages */
 .cloud-bubble {
+    position: absolute;
+    background: #fdfbf4;
+    color: #16203a;
+    border-radius: 999px;
+    padding: 0.5rem 0.95rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(2, 8, 23, 0.45);
+    z-index: 5;
+}
+
 /* Hero logo lightning strike (CSS-driven, replays on remount) */
 .hero-bolt {
     stroke-dasharray: 1 1;
@@ -23,19 +37,38 @@
     100% { stroke-dashoffset: 0; opacity: 0; }
 }
 
-    position: absolute;
-    background: #fdfbf4;
-    color: #16203a;
-    border-radius: 999px;
-    padding: 0.5rem 0.95rem;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.88rem;
-    font-weight: 600;
-    line-height: 1.35;
-    text-align: center;
-    box-shadow: 0 6px 16px rgba(2, 8, 23, 0.45);
-    z-index: 5;
+/* Running mascot */
+@keyframes mascot-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
 }
+.mascot-run { animation: mascot-bob 0.32s ease-in-out infinite; }
+
+@keyframes mascot-leg-a {
+    0%, 100% { transform: rotate(30deg); }
+    50% { transform: rotate(-30deg); }
+}
+@keyframes mascot-leg-b {
+    0%, 100% { transform: rotate(-30deg); }
+    50% { transform: rotate(30deg); }
+}
+.mascot-leg-a { animation: mascot-leg-a 0.32s ease-in-out infinite; }
+.mascot-leg-b { animation: mascot-leg-b 0.32s ease-in-out infinite; }
+
+@keyframes mascot-cape {
+    0%, 100% { transform: skewY(-10deg) scaleX(1.05); }
+    50% { transform: skewY(6deg) scaleX(0.9); }
+}
+.mascot-cape { animation: mascot-cape 0.4s ease-in-out infinite; }
+
+@keyframes mascot-shake {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-9deg); }
+    40% { transform: rotate(8deg); }
+    60% { transform: rotate(-7deg); }
+    80% { transform: rotate(6deg); }
+}
+.mascot-shake { animation: mascot-shake 0.5s ease-in-out 2; }
 .cloud-bubble::before,
 .cloud-bubble::after {
     content: '';

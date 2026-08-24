@@ -128,7 +128,7 @@ export default function StoryPage() {
       </div>
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 -mt-24 md:-mt-36 relative z-10">
       <div className="grid md:grid-cols-2 lg:grid-cols-[280px_auto_320px] gap-5 lg:gap-8 lg:justify-center">
-        <div className="flex flex-col gap-5 lg:gap-0 lg:justify-between lg:py-2 order-2 lg:order-1">
+        <div className="flex flex-col gap-5 lg:gap-11 lg:justify-start lg:py-2 order-2 lg:order-1">
           <Reveal>
             <div className="glass rounded-2xl p-6 text-center" data-testid="author-card">
               <p className="text-[10px] uppercase tracking-[0.35em] text-gold mb-4">Tác giả</p>

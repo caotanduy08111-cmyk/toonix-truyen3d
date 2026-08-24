@@ -3,11 +3,18 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 
 const heroBolt = (seed) => {
-  let d = `M ${120 + seed * 60} -20`;
-  let x = 120 + seed * 60;
-  for (let y = 30; y <= 280; y += 38) {
-    x += ((seed * 71 + y * 13) % 90) - 45;
-    d += ` L ${Math.round(Math.max(20, Math.min(780, x)))} ${y}`;
+  const x0 = 120 + seed * 60;
+  const segments = 7;
+  let d = `M ${x0} -20`;
+  let x = x0;
+  let dir = seed % 2 === 0 ? 1 : -1;
+  for (let i = 1; i <= segments; i++) {
+    const y = -20 + (i * 300) / segments;
+    const amp = 22 + ((seed * 41 + i * 17) % 30);
+    x += dir * amp;
+    x = Math.max(20, Math.min(780, x));
+    d += ` L ${Math.round(x)} ${Math.round(y)}`;
+    dir *= -1;
   }
   return d;
 };
@@ -18,6 +25,7 @@ import { CoverArt } from '../components/CoverArt';
 import { Marquee } from '../components/Marquee';
 import { LinkCard } from '../components/LinkCard';
 import { LightningIntro } from '../components/LightningIntro';
+import { RunningMascot } from '../components/RunningMascot';
 import { Reveal, SectionHeading } from '../components/Reveal';
 
 const Hero = () => {
@@ -76,27 +84,16 @@ const Hero = () => {
               data-testid="hero-logo"
               animate={{
                 y: [0, -14, 0],
-                filter: [
-                  'brightness(1) drop-shadow(0 0 20px rgba(34,200,234,0.45)) drop-shadow(0 0 55px rgba(34,200,234,0.22))',
-                  'brightness(1.14) drop-shadow(0 0 34px rgba(34,200,234,0.75)) drop-shadow(0 0 95px rgba(34,200,234,0.42))',
-                  'brightness(1) drop-shadow(0 0 20px rgba(34,200,234,0.45)) drop-shadow(0 0 55px rgba(34,200,234,0.22))',
-                ],
+                filter: ['brightness(1)', 'brightness(1.1)', 'brightness(1)'],
               }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
               className="w-[80vw] max-w-[620px] h-auto"
+              style={{
+                WebkitMaskImage: 'radial-gradient(ellipse 75% 60% at 50% 50%, #000 60%, transparent 100%)',
+                maskImage: 'radial-gradient(ellipse 75% 60% at 50% 50%, #000 60%, transparent 100%)',
+              }}
             />
-            <AnimatePresence>
-              {strike > 0 && (
-                <motion.div
-                  key={strike}
-                  className="absolute -inset-8 bg-[radial-gradient(circle_at_50%_50%,rgba(34,200,234,0.32),transparent_65%)] pointer-events-none"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 0.5 }}
-                />
-              )}
-            </AnimatePresence>
-            <svg key={`bolt-${strike}`} className="absolute -inset-[10%] w-[120%] h-[120%] pointer-events-none" viewBox="0 0 800 260" preserveAspectRatio="none">
+            <svg key={`bolt-${strike}`} className="absolute -inset-[10%] w-[120%] h-[120%] pointer-events-none overflow-visible" viewBox="0 0 800 260" preserveAspectRatio="none">
               {[0, 1].map((i) => (
                 <path
                   key={i}
@@ -107,11 +104,10 @@ const Hero = () => {
                   strokeWidth={i ? 2.2 : 3.4}
                   fill="none"
                   strokeLinecap="round"
-                  style={{ filter: 'drop-shadow(0 0 6px #22C8EA) drop-shadow(0 0 18px #22C8EA)', animationDelay: `${i * 0.12}s` }}
+                  style={{ animationDelay: `${i * 0.12}s` }}
                 />
               ))}
             </svg>
-            <div className="absolute -inset-12 bg-[radial-gradient(closest-side,rgba(34,200,234,0.22),transparent)] blur-2xl -z-10 animate-pulse-gold" />
           </motion.div>
         </div>
 
@@ -415,6 +411,7 @@ export default function HomePage() {
       <Hero />
       <Marquee items={['Tiên Hiệp', 'Kiếm Hiệp', 'Huyền Huyễn', 'Đô Thị', 'Khoa Huyễn', 'Kinh Dị', 'Lãng Mạn', 'Hài Hước']} />
       <FeaturedGrid />
+      <RunningMascot />
       <UpdatedSection />
       <Marquee items={['1.200+ Đầu Truyện', 'Chương Mới Mỗi Giờ', 'Trải Nghiệm 3D', 'Lật Sách Như Thật', 'Hoàn Toàn Miễn Phí']} />
       <RankSection />
