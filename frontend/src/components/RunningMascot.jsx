@@ -16,7 +16,7 @@ export const RunningMascot = () => {
   const x = useMotionValue(0);
   const taskRef = useRef(null);
   const annoyedTimer = useRef(null);
-  const dragStartX = useRef(0);
+  const pointerDown = useRef(null);
   const [annoyed, setAnnoyed] = useState(false);
   const [line, setLine] = useState(GRUMPY_LINES[0]);
 
@@ -61,7 +61,7 @@ export const RunningMascot = () => {
   }, []);
 
   return (
-    <div className="relative z-10 h-28 md:h-32 -my-12 md:-my-16 overflow-x-clip">
+    <div className="relative z-20 h-28 md:h-32 -my-12 md:-my-16 overflow-x-clip">
       <motion.div
         className="absolute top-1/2 cursor-grab active:cursor-grabbing"
         style={{ x, y: 'calc(-50% + 34px)', touchAction: 'none' }}
@@ -70,15 +70,19 @@ export const RunningMascot = () => {
         dragMomentum={false}
         dragConstraints={{ left: -window.innerWidth * 0.6, right: window.innerWidth * 1.3 }}
         whileDrag={{ scale: 1.1 }}
-        onDragStart={() => {
-          dragStartX.current = x.get();
-          clearTask();
+        onDragStart={clearTask}
+        onDragEnd={() => runFrom(x.get())}
+        onPointerDown={(e) => {
+          pointerDown.current = { x: e.clientX, y: e.clientY, t: Date.now() };
         }}
-        onDragEnd={() => {
-          if (Math.abs(x.get() - dragStartX.current) < 12) handleTap();
-          runFrom(x.get());
+        onPointerUp={(e) => {
+          const start = pointerDown.current;
+          pointerDown.current = null;
+          if (!start) return;
+          const dist = Math.hypot(e.clientX - start.x, e.clientY - start.y);
+          const elapsed = Date.now() - start.t;
+          if (dist < 12 && elapsed < 600) handleTap();
         }}
-        onTap={handleTap}
       >
         <div className={`relative w-32 h-28 mascot-run ${annoyed ? 'mascot-shake' : ''}`}>
           <AnimatePresence>
