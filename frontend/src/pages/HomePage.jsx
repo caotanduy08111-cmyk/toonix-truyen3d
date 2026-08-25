@@ -302,6 +302,9 @@ const RankSection = () => (
         </Reveal>
       </div>
       <div>
+        <div className="invisible hidden lg:block" aria-hidden="true">
+          <SectionHeading kicker="Bảng xếp hạng" title="Top đọc nhiều nhất" />
+        </div>
         <Reveal delay={0.15}>
           <div className="lg:sticky lg:top-28 glass rounded-2xl p-7 gold-glow">
             <p className="text-xs uppercase tracking-[0.35em] text-gold mb-5 flex items-center gap-2">
