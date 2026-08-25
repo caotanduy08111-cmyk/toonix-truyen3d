@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Clock, Eye } from '@phosphor-icons/react';
 import { STORIES, byGenre, fullStories, topStories, genreName, GENRES } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
@@ -20,10 +20,10 @@ const HERO_BANNERS = [
   '/banners/the-thao-cuc-han.jpg',
 ];
 
-const pickBanner = (key) => {
+const bannerIndexFor = (key) => {
   let hash = 0;
   for (let i = 0; i < key.length; i++) hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
-  return HERO_BANNERS[hash % HERO_BANNERS.length];
+  return hash % HERO_BANNERS.length;
 };
 
 const CONFIG = {
@@ -43,12 +43,35 @@ export default function ListPage({ kind }) {
   const desc = genre ? genre.desc : cfg.desc;
   const stories = kind === 'genre' ? byGenre(slug) : cfg.get ? cfg.get() : [];
   const history = kind === 'history' ? getHistory() : [];
-  const banner = pickBanner(`${kind}-${slug || ''}`);
+  const [bannerIdx, setBannerIdx] = useState(() => bannerIndexFor(`${kind}-${slug || ''}`));
+
+  useEffect(() => {
+    setBannerIdx(bannerIndexFor(`${kind}-${slug || ''}`));
+  }, [kind, slug]);
+
+  useEffect(() => {
+    const id = setInterval(() => setBannerIdx((i) => (i + 1) % HERO_BANNERS.length), 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  const banner = HERO_BANNERS[bannerIdx];
 
   return (
     <div data-testid={`list-page-${kind}`} className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-32 md:pt-40 pb-10 min-h-screen">
       <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-coal/40 px-6 md:px-12 py-12 md:py-16" data-testid="list-hero">
-        <img src={banner} alt="" className="absolute inset-0 w-full h-full object-cover" data-testid="list-hero-banner" />
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={banner}
+            src={banner}
+            alt=""
+            initial={{ x: '100%', opacity: 0.4 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: '-100%', opacity: 0.4 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 w-full h-full object-cover"
+            data-testid="list-hero-banner"
+          />
+        </AnimatePresence>
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(2,8,23,0.98)_0%,rgba(2,8,23,0.85)_35%,rgba(2,8,23,0.35)_55%,transparent_68%)]" />
         <div className="relative">
           <div>
