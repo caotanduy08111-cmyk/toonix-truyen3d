@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { BookOpen, ChatCircle, Clock, Eye, Heart, ListBullets, PaperPlaneTilt, Star, ThumbsUp, TrendUp, User } from '@phosphor-icons/react';
 import { toast } from 'sonner';
@@ -9,7 +9,7 @@ import { StoryCard } from '../components/StoryCard';
 import { Reveal } from '../components/Reveal';
 import { isFav, toggleFav } from '../lib/store';
 
-const TiltCover = ({ story }) => {
+const TiltCover = ({ story, spinning, onSpinDone }) => {
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
   const rx = useSpring(useTransform(my, [0, 1], [8, -8]), { stiffness: 150, damping: 18 });
@@ -18,6 +18,7 @@ const TiltCover = ({ story }) => {
     <div
       style={{ perspective: 1000 }}
       onMouseMove={(e) => {
+        if (spinning) return;
         const r = e.currentTarget.getBoundingClientRect();
         mx.set((e.clientX - r.left) / r.width);
         my.set((e.clientY - r.top) / r.height);
@@ -26,7 +27,10 @@ const TiltCover = ({ story }) => {
       className="relative w-full max-w-[380px] mx-auto"
     >
       <motion.div
-        style={{ rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
+        style={spinning ? { transformStyle: 'preserve-3d' } : { rotateX: rx, rotateY: ry, transformStyle: 'preserve-3d' }}
+        animate={spinning ? { rotateY: 360, scale: [1, 1.08, 1] } : { rotateY: 0 }}
+        transition={spinning ? { duration: 0.7, ease: 'easeInOut' } : { duration: 0 }}
+        onAnimationComplete={() => { if (spinning) onSpinDone?.(); }}
         className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-gold/30 gold-glow shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]"
       >
         <CoverArt story={story} />
@@ -50,10 +54,17 @@ const COMMENTS = [
 
 export default function StoryPage() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const story = getStory(slug);
   const [fav, setFav] = useState(false);
   const [comments, setComments] = useState(COMMENTS);
   const [draft, setDraft] = useState('');
+  const [spinTarget, setSpinTarget] = useState(null);
+
+  const goRead = (path) => {
+    if (spinTarget) return;
+    setSpinTarget(path);
+  };
 
   useEffect(() => { setFav(isFav(slug)); }, [slug]);
 
@@ -166,7 +177,13 @@ export default function StoryPage() {
         </div>
 
         <div className="order-1 lg:order-2">
-          <Reveal><TiltCover story={story} /></Reveal>
+          <Reveal>
+            <TiltCover
+              story={story}
+              spinning={!!spinTarget}
+              onSpinDone={() => { if (spinTarget) navigate(spinTarget); }}
+            />
+          </Reveal>
           <Reveal delay={0.08}>
             <div className="text-center mt-8">
               <span className={`inline-block text-[11px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border mb-4 ${story.status === 'Hoàn thành' ? 'border-gold/40 bg-gold/15 text-gold' : 'border-white/15 text-ash'}`}>
@@ -174,20 +191,22 @@ export default function StoryPage() {
               </span>
               <h1 className="font-display text-4xl md:text-5xl font-bold text-bone leading-tight">{story.title}</h1>
               <div className="flex flex-wrap justify-center gap-3 mt-7">
-                <Link
-                  to={`/doc/${story.slug}/1`}
+                <button
+                  onClick={() => goRead(`/doc/${story.slug}/1`)}
                   data-testid="read-from-start-btn"
-                  className="px-8 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:shadow-[0_0_35px_rgba(34,200,234,0.45)] transition-shadow duration-300"
+                  disabled={!!spinTarget}
+                  className="px-8 py-3.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider flex items-center gap-2 hover:shadow-[0_0_35px_rgba(34,200,234,0.45)] transition-shadow duration-300 disabled:opacity-60"
                 >
                   <BookOpen size={15} weight="bold" /> Đọc từ đầu
-                </Link>
-                <Link
-                  to={`/doc/${story.slug}/${story.chapters.length}`}
+                </button>
+                <button
+                  onClick={() => goRead(`/doc/${story.slug}/${story.chapters.length}`)}
                   data-testid="read-latest-btn"
-                  className="px-7 py-3.5 rounded-full border border-white/20 text-bone text-xs font-bold uppercase tracking-wider hover:border-gold/60 hover:text-gold transition-colors duration-300"
+                  disabled={!!spinTarget}
+                  className="px-7 py-3.5 rounded-full border border-white/20 text-bone text-xs font-bold uppercase tracking-wider hover:border-gold/60 hover:text-gold transition-colors duration-300 disabled:opacity-60"
                 >
                   Đọc mới nhất
-                </Link>
+                </button>
                 <button
                   data-testid="favorite-toggle-btn"
                   onClick={onFav}
