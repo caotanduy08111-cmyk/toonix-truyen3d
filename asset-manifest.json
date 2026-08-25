@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/toonixtruyentranh/static/css/main.953f3328.css",
-    "main.js": "/toonixtruyentranh/static/js/main.a5387095.js",
-    "index.html": "/toonixtruyentranh/index.html",
-    "main.953f3328.css.map": "/toonixtruyentranh/static/css/main.953f3328.css.map",
-    "main.a5387095.js.map": "/toonixtruyentranh/static/js/main.a5387095.js.map"
+    "main.css": "https://caotanduy08111-cmyk.github.io/toonixtruyentranh/static/css/main.2ce8c7cb.css",
+    "main.js": "https://caotanduy08111-cmyk.github.io/toonixtruyentranh/static/js/main.5d9c8a63.js",
+    "index.html": "https://caotanduy08111-cmyk.github.io/toonixtruyentranh/index.html",
+    "main.2ce8c7cb.css.map": "https://caotanduy08111-cmyk.github.io/toonixtruyentranh/static/css/main.2ce8c7cb.css.map",
+    "main.5d9c8a63.js.map": "https://caotanduy08111-cmyk.github.io/toonixtruyentranh/static/js/main.5d9c8a63.js.map"
   },
   "entrypoints": [
-    "static/css/main.953f3328.css",
-    "static/js/main.a5387095.js"
+    "static/css/main.2ce8c7cb.css",
+    "static/js/main.5d9c8a63.js"
   ]
 }
