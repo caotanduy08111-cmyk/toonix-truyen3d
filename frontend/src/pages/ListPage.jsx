@@ -49,18 +49,13 @@ export default function ListPage({ kind }) {
     <div data-testid={`list-page-${kind}`} className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-32 md:pt-40 pb-10 min-h-screen">
       <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-coal/40 px-6 md:px-12 py-12 md:py-16" data-testid="list-hero">
         <img src={banner} alt="" className="absolute inset-0 w-full h-full object-cover" data-testid="list-hero-banner" />
-        <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/85 to-obsidian/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/40" />
-        <span className="absolute -bottom-10 -left-4 font-display text-[8rem] md:text-[12rem] font-bold text-white/[0.04] leading-none select-none pointer-events-none whitespace-nowrap">
-          {title}
-        </span>
         <div className="relative">
           <div>
             <motion.p
               initial={{ opacity: 0, x: -24 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-xs uppercase tracking-[0.5em] text-gold mb-4 flex items-center gap-3"
+              className="text-xs uppercase tracking-[0.5em] text-gold mb-4 flex items-center gap-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
             >
               <span className="w-10 h-px bg-gold/60" /> {cfg.kicker}
             </motion.p>
@@ -69,7 +64,7 @@ export default function ListPage({ kind }) {
                 initial={{ y: '110%' }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                className="font-display text-5xl md:text-7xl font-bold text-bone leading-[1.05]"
+                className="font-display text-5xl md:text-7xl font-bold text-bone leading-[1.05] drop-shadow-[0_4px_18px_rgba(0,0,0,0.95)]"
               >
                 {title}
               </motion.h1>
@@ -78,7 +73,7 @@ export default function ListPage({ kind }) {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.6 }}
-              className="text-ash mt-4 max-w-xl text-base md:text-lg"
+              className="text-ash mt-4 max-w-xl text-base md:text-lg drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]"
             >
               {desc}
             </motion.p>
