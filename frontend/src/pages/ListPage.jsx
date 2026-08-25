@@ -8,6 +8,24 @@ import { Reveal } from '../components/Reveal';
 import { getHistory } from '../lib/store';
 import { CoverArt } from '../components/CoverArt';
 
+const HERO_BANNERS = [
+  '/banners/naruto.jpg',
+  '/banners/iruma.jpg',
+  '/banners/hiep-si-hoa-bang.jpg',
+  '/banners/tien-dao-so-1.jpg',
+  '/banners/cuoc-chien-cac-vi-than.jpg',
+  '/banners/lan-nua-toa-sang.jpg',
+  '/banners/mr-devourer.jpg',
+  '/banners/bao-mau-xac-uop.jpg',
+  '/banners/the-thao-cuc-han.jpg',
+];
+
+const pickBanner = (key) => {
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+  return HERO_BANNERS[hash % HERO_BANNERS.length];
+};
+
 const CONFIG = {
   all: { kicker: 'Kho truyện', title: 'Danh sách truyện', desc: 'Toàn bộ kho truyện trong thư viện TOONIX.', get: () => STORIES, display: 'grid' },
   updated: { kicker: 'Vừa ra lò', title: 'Truyện mới cập nhật', desc: 'Những chương truyện nóng hổi vừa được đăng tải.', get: () => STORIES, display: 'grid' },
@@ -25,15 +43,18 @@ export default function ListPage({ kind }) {
   const desc = genre ? genre.desc : cfg.desc;
   const stories = kind === 'genre' ? byGenre(slug) : cfg.get ? cfg.get() : [];
   const history = kind === 'history' ? getHistory() : [];
+  const banner = pickBanner(`${kind}-${slug || ''}`);
 
   return (
     <div data-testid={`list-page-${kind}`} className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-32 md:pt-40 pb-10 min-h-screen">
       <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-coal/40 px-6 md:px-12 py-12 md:py-16" data-testid="list-hero">
+        <img src={banner} alt="" className="absolute inset-0 w-full h-full object-cover" data-testid="list-hero-banner" />
+        <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/85 to-obsidian/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/40" />
         <span className="absolute -bottom-10 -left-4 font-display text-[8rem] md:text-[12rem] font-bold text-white/[0.04] leading-none select-none pointer-events-none whitespace-nowrap">
           {title}
         </span>
-        <div className="absolute -top-24 -right-16 w-96 h-96 bg-gold/10 blur-[110px] rounded-full pointer-events-none" />
-        <div className="relative grid lg:grid-cols-[1fr_auto] gap-10 items-center">
+        <div className="relative">
           <div>
             <motion.p
               initial={{ opacity: 0, x: -24 }}
@@ -74,27 +95,6 @@ export default function ListPage({ kind }) {
               </motion.div>
             )}
           </div>
-          {stories.length > 0 && (
-            <div className="relative hidden lg:block w-[360px] h-[300px]" style={{ perspective: 900 }} data-testid="list-hero-fan">
-              {stories.slice(0, 3).map((s, i) => (
-                <motion.div
-                  key={s.slug}
-                  initial={{ opacity: 0, y: 60, rotate: 0 }}
-                  animate={{ opacity: 1, y: 0, rotate: (i - 1) * 9 }}
-                  transition={{ delay: 0.3 + i * 0.15, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ y: -14, rotate: (i - 1) * 9, scale: 1.06, zIndex: 10 }}
-                  className="absolute top-2 w-36 aspect-[3/4] rounded-xl overflow-hidden border border-white/15 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85)] animate-floaty"
-                  style={{ left: `${30 + i * 95}px`, zIndex: i, animationDelay: `${i * 0.9}s` }}
-                >
-                  <Link to={`/truyen/${s.slug}`} data-testid={`fan-cover-${s.slug}`} className="block w-full h-full">
-                    <CoverArt story={s} showTitle={false} />
-                    <span className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <span className="absolute bottom-2.5 inset-x-2.5 font-display text-sm font-semibold text-bone leading-tight drop-shadow">{s.title}</span>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
 
