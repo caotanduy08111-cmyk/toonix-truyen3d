@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { BookOpen, ChatCircle, Clock, Eye, Heart, ListBullets, PaperPlaneTilt, Star, ThumbsUp, TrendUp, User } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { getStory, genreName, STORIES, topStories } from '../data/stories';
@@ -60,10 +60,16 @@ export default function StoryPage() {
   const [comments, setComments] = useState(COMMENTS);
   const [draft, setDraft] = useState('');
   const [spinTarget, setSpinTarget] = useState(null);
+  const [showGreeting, setShowGreeting] = useState(false);
 
   const goRead = (path) => {
     if (spinTarget) return;
     setSpinTarget(path);
+  };
+
+  const onSpinDone = () => {
+    setShowGreeting(true);
+    setTimeout(() => navigate(spinTarget), 1100);
   };
 
   useEffect(() => { setFav(isFav(slug)); }, [slug]);
@@ -112,6 +118,26 @@ export default function StoryPage() {
 
   return (
     <div data-testid="story-page" className="relative z-10 pt-16 md:pt-[72px] pb-10">
+      <AnimatePresence>
+        {showGreeting && (
+          <motion.div
+            data-testid="read-transition-overlay"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-[#fdfbf4] pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 1.1, times: [0, 0.12, 0.75, 1], ease: 'easeInOut' }}
+          >
+            <motion.p
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.14, duration: 0.35, ease: 'easeOut' }}
+              className="font-display text-2xl md:text-4xl font-semibold text-obsidian text-center px-6"
+            >
+              Chúc bạn đọc truyện vui vẻ ✨
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="relative h-[280px] md:h-[400px] overflow-hidden" data-testid="story-banner">
         {story.img ? (
           <motion.img
@@ -181,7 +207,7 @@ export default function StoryPage() {
             <TiltCover
               story={story}
               spinning={!!spinTarget}
-              onSpinDone={() => { if (spinTarget) navigate(spinTarget); }}
+              onSpinDone={() => { if (spinTarget) onSpinDone(); }}
             />
           </Reveal>
           <Reveal delay={0.08}>
