@@ -20,7 +20,7 @@ const makeBolt = (x0, seed, w = 800, h = 420) => {
 export const ReadTransition = ({ show, message = 'Chúc bạn đọc truyện vui vẻ ✨', onDone }) => {
   useEffect(() => {
     if (!show) return undefined;
-    const t = setTimeout(() => onDone?.(), 1300);
+    const t = setTimeout(() => onDone?.(), 5000);
     return () => clearTimeout(t);
   }, [show, onDone]);
 
@@ -64,8 +64,12 @@ export const ReadTransition = ({ show, message = 'Chúc bạn đọc truyện vu
             </svg>
             <motion.p
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: [0, 1, 0.6, 1], scale: 1, filter: ['brightness(1)', 'brightness(1.7)', 'brightness(1)'] }}
-              transition={{ duration: 0.9, times: [0, 0.3, 0.6, 1] }}
+              animate={{
+                opacity: [0, 1, 0.6, 1, 1, 0.75, 1],
+                scale: 1,
+                filter: ['brightness(1)', 'brightness(1.7)', 'brightness(1)', 'brightness(1)', 'brightness(1.2)', 'brightness(1)', 'brightness(1.2)'],
+              }}
+              transition={{ duration: 4.6, times: [0, 0.1, 0.2, 0.2, 0.55, 0.78, 1], ease: 'easeInOut' }}
               className="relative font-display text-2xl md:text-4xl font-bold text-bone text-center px-6 drop-shadow-[0_0_30px_rgba(34,200,234,0.6)]"
             >
               {message}
