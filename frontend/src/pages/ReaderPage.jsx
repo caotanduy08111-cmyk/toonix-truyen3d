@@ -10,6 +10,7 @@ import { ReaderAmbience } from '../components/ReaderAmbience';
 import { FlipBurst } from '../components/FlipBurst';
 import { getTheme } from '../lib/readerTheme';
 import { PANELS } from '../data/panels';
+import { playPageFlipSound } from '../lib/pageFlipSound';
 
 const clipText = (t, max = 220) => {
   if (!t) return '';
@@ -125,12 +126,15 @@ export default function ReaderPage() {
             showCover
             drawShadow
             flippingTime={900}
-            maxShadowOpacity={0.55}
+            maxShadowOpacity={0.7}
             mobileScrollSupport
             className="mx-auto"
             onFlip={(e) => {
               setPageIdx((prev) => {
-                if (e.data !== prev) setBurst({ id: Date.now(), dir: e.data > prev ? 1 : -1 });
+                if (e.data !== prev) {
+                  setBurst({ id: Date.now(), dir: e.data > prev ? 1 : -1 });
+                  playPageFlipSound();
+                }
                 return e.data;
               });
             }}

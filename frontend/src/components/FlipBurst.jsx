@@ -15,17 +15,30 @@ export const FlipBurst = ({ burst, kind = 'lightning' }) => {
   const k = KIND_STYLE[kind] || KIND_STYLE.lightning;
   const seed = burst.id % 97;
   const side = burst.dir > 0 ? { right: '4%' } : { left: '4%' };
+  const flashColor = k.colors[0];
   return (
-    <div key={burst.id} className="absolute inset-0 pointer-events-none z-30" data-testid="flip-burst">
-      {k.flash && (
-        <motion.div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,220,255,0.32),transparent_65%)]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{ duration: 0.4 }}
-        />
-      )}
-      {Array.from({ length: 18 }, (_, i) => {
+    <div key={burst.id} className="absolute inset-0 pointer-events-none z-30 overflow-hidden" data-testid="flip-burst">
+      <motion.div
+        className="absolute inset-0"
+        style={{ background: `radial-gradient(circle at ${burst.dir > 0 ? '85%' : '15%'} 50%, ${flashColor}55, transparent 62%)` }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 0] }}
+        transition={{ duration: k.flash ? 0.45 : 0.3 }}
+      />
+      <motion.div
+        className="absolute top-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          ...side,
+          width: 4,
+          height: 4,
+          boxShadow: `0 0 40px 18px ${flashColor}`,
+          background: flashColor,
+        }}
+        initial={{ opacity: 0.9, scale: 0.3 }}
+        animate={{ opacity: 0, scale: 14 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+      />
+      {Array.from({ length: 30 }, (_, i) => {
         const out = (burst.dir > 0 ? 1 : -1) * (40 + rnd(i, 1, seed) * 160);
         const vy = k.up ? -(30 + rnd(i, 2, seed) * 150) : 20 + rnd(i, 2, seed) * 140;
         const size = k.size[0] + rnd(i, 3, seed) * (k.size[1] - k.size[0]);
