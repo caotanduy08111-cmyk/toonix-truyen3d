@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Heart } from '@phosphor-icons/react';
 
 const makeBolt = (x0, seed, w = 800, h = 420) => {
   const segments = 9;
@@ -17,7 +18,7 @@ const makeBolt = (x0, seed, w = 800, h = 420) => {
   return d;
 };
 
-export const ReadTransition = ({ show, message = 'Chúc bạn đọc truyện vui vẻ ✨', onDone }) => {
+export const ReadTransition = ({ show, message = 'Chúc bạn đọc truyện vui vẻ', onDone }) => {
   useEffect(() => {
     if (!show) return undefined;
     const t = setTimeout(() => onDone?.(), 5000);
@@ -70,9 +71,16 @@ export const ReadTransition = ({ show, message = 'Chúc bạn đọc truyện vu
                 filter: ['brightness(1)', 'brightness(1.7)', 'brightness(1)', 'brightness(1)', 'brightness(1.2)', 'brightness(1)', 'brightness(1.2)'],
               }}
               transition={{ duration: 4.6, times: [0, 0.1, 0.2, 0.2, 0.55, 0.78, 1], ease: 'easeInOut' }}
-              className="relative font-display text-2xl md:text-4xl font-bold text-bone text-center px-6 drop-shadow-[0_0_30px_rgba(34,200,234,0.6)]"
+              className="relative font-display text-2xl md:text-4xl font-bold text-bone text-center px-6 drop-shadow-[0_0_30px_rgba(34,200,234,0.6)] flex items-center justify-center gap-3 flex-wrap"
             >
-              {message}
+              <span>{message}</span>
+              <motion.span
+                className="inline-flex text-blood drop-shadow-[0_0_18px_rgba(224,85,74,0.75)]"
+                animate={{ scale: [1, 1.3, 1, 1.18, 1] }}
+                transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <Heart weight="fill" size={30} />
+              </motion.span>
             </motion.p>
           </div>
         </motion.div>
