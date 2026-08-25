@@ -202,7 +202,7 @@ const Hero = () => {
 const FeaturedGrid = () => {
   const feats = STORIES.filter((s) => s.featured);
   return (
-    <section className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 py-24 md:py-32" data-testid="featured-section">
+    <section className="relative z-10 max-w-[1100px] mx-auto px-5 md:px-10 py-24 md:py-32" data-testid="featured-section">
       <Reveal><SectionHeading kicker="Tuyển chọn" title="Truyện đề cử" link="/danh-sach" /></Reveal>
       <div className="grid lg:grid-cols-2 gap-4 md:gap-6 items-start">
         <Reveal>
