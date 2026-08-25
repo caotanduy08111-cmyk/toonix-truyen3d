@@ -49,6 +49,7 @@ export default function ListPage({ kind }) {
     <div data-testid={`list-page-${kind}`} className="relative z-10 max-w-[1440px] mx-auto px-5 md:px-10 pt-32 md:pt-40 pb-10 min-h-screen">
       <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-coal/40 px-6 md:px-12 py-12 md:py-16" data-testid="list-hero">
         <img src={banner} alt="" className="absolute inset-0 w-full h-full object-cover" data-testid="list-hero-banner" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(2,8,23,0.94)_0%,rgba(2,8,23,0.6)_38%,transparent_62%)]" />
         <div className="relative">
           <div>
             <motion.p
