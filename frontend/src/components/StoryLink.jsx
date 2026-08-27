@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getUser, getHistory } from '../lib/store';
+import { getUser } from '../lib/store';
 
 export const StoryLink = forwardRef(({ slug, onClick, children, ...rest }, ref) => {
   const navigate = useNavigate();
@@ -11,8 +11,7 @@ export const StoryLink = forwardRef(({ slug, onClick, children, ...rest }, ref) 
     if (e.defaultPrevented) return;
     if (!getUser()) {
       e.preventDefault();
-      const resume = getHistory().find((h) => h.slug === slug);
-      navigate('/dang-nhap', { state: { from: `/doc/${slug}/${resume?.chapter || 1}` } });
+      navigate('/dang-nhap', { state: { from: to } });
     }
   };
 
