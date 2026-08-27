@@ -1,8 +1,8 @@
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Eye, Star } from '@phosphor-icons/react';
 import { CoverArt } from './CoverArt';
+import { StoryLink } from './StoryLink';
 import { genreName } from '../data/stories';
 
 export const StoryCard = ({ story, className = '', tall = false }) => {
@@ -23,9 +23,9 @@ export const StoryCard = ({ story, className = '', tall = false }) => {
   const reset = () => { mx.set(0.5); my.set(0.5); };
 
   return (
-    <Link
+    <StoryLink
       ref={ref}
-      to={`/truyen/${story.slug}`}
+      slug={story.slug}
       data-testid={`story-card-${story.slug}`}
       onMouseMove={onMove}
       onMouseLeave={reset}
@@ -60,6 +60,6 @@ export const StoryCard = ({ story, className = '', tall = false }) => {
           </div>
         </div>
       </motion.div>
-    </Link>
+    </StoryLink>
   );
 };

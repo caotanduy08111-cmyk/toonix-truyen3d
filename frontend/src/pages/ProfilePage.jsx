@@ -4,6 +4,7 @@ import { BookOpen, Clock, Heart, SignOut, User } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 import { STORIES } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
+import { StoryLink } from '../components/StoryLink';
 import { Reveal } from '../components/Reveal';
 import { getFavs, getHistory, getUser, logout } from '../lib/store';
 
@@ -118,7 +119,7 @@ export default function ProfilePage() {
               return (
                 <div key={h.slug} className="glass rounded-xl p-5 flex items-center gap-5 hover:border-gold/40 transition-colors">
                   <div className="flex-1 min-w-0">
-                    <Link to={`/truyen/${s.slug}`} className="font-display text-xl font-semibold text-bone hover:text-gold transition-colors">{s.title}</Link>
+                    <StoryLink slug={s.slug} className="font-display text-xl font-semibold text-bone hover:text-gold transition-colors">{s.title}</StoryLink>
                     <p className="text-xs text-ash mt-1">Đang đọc chương {h.chapter} / {s.chaptersCount}</p>
                   </div>
                   <Link to={`/doc/${s.slug}/${h.chapter}`} data-testid={`profile-resume-${s.slug}`} className="px-6 py-2.5 rounded-full bg-gold text-obsidian text-xs font-bold uppercase tracking-wider hover:shadow-[0_0_25px_rgba(34,200,234,0.4)] transition-shadow shrink-0">

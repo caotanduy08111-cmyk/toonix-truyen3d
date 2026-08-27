@@ -21,6 +21,7 @@ const heroBolt = (seed) => {
 import { ArrowRight, BookOpen, Crown, Eye, Fire, Star } from '@phosphor-icons/react';
 import { STORIES, topStories, fullStories, GENRES, genreName, byGenre } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
+import { StoryLink } from '../components/StoryLink';
 import { CoverArt } from '../components/CoverArt';
 import { Marquee } from '../components/Marquee';
 import { LinkCard } from '../components/LinkCard';
@@ -162,26 +163,26 @@ const Hero = () => {
       <div className="absolute right-[7%] top-[12%] hidden xl:block w-[430px] z-[5]" style={{ perspective: 1100 }}>
         <motion.div style={{ x: x1, y: y1 }} className="absolute top-0 -left-14 w-56 rotate-[8deg] animate-floaty">
           <motion.div animate={{ scale: [1, 1.12, 1], x: [0, -46, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-gold/30 gold-glow group">
-            <Link to={`/truyen/${STORIES[3].slug}`} data-testid="hero-cover-link-1" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
+            <StoryLink slug={STORIES[3].slug} data-testid="hero-cover-link-1" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
               <CoverArt story={STORIES[3]} />
               <span className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-colors duration-300" />
-            </Link>
+            </StoryLink>
           </motion.div>
         </motion.div>
         <motion.div style={{ x: x2, y: y2 }} className="absolute top-52 right-[-8px] w-60 -rotate-[6deg] animate-floaty [animation-delay:1.4s]">
           <motion.div animate={{ scale: [1.08, 0.95, 1.08], x: [0, -64, 0] }} transition={{ duration: 8.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/15 shadow-2xl group">
-            <Link to={`/truyen/${STORIES[0].slug}`} data-testid="hero-cover-link-2" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
+            <StoryLink slug={STORIES[0].slug} data-testid="hero-cover-link-2" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
               <CoverArt story={STORIES[0]} />
               <span className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-colors duration-300" />
-            </Link>
+            </StoryLink>
           </motion.div>
         </motion.div>
         <motion.div style={{ x: x1, y: y2 }} className="absolute top-[500px] left-2 w-48 rotate-[14deg] animate-floaty [animation-delay:2.6s]">
           <motion.div animate={{ scale: [0.95, 1.14, 0.95], x: [0, -38, 0] }} transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }} className="relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 opacity-90 group">
-            <Link to={`/truyen/${STORIES[5].slug}`} data-testid="hero-cover-link-3" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
+            <StoryLink slug={STORIES[5].slug} data-testid="hero-cover-link-3" className="relative block w-full h-full cursor-pointer" title="Bấm để xem truyện">
               <CoverArt story={STORIES[5]} />
               <span className="absolute inset-0 bg-gold/0 group-hover:bg-gold/15 transition-colors duration-300" />
-            </Link>
+            </StoryLink>
           </motion.div>
         </motion.div>
       </div>
@@ -243,8 +244,8 @@ const RankSection = () => (
           {topStories.slice(0, 10).map((s, i) => (
             <Reveal key={s.slug} delay={i * 0.04} y={24}>
               {i === 0 ? (
-                <Link
-                  to={`/truyen/${s.slug}`}
+                <StoryLink
+                  slug={s.slug}
                   data-testid={`rank-row-${s.slug}`}
                   className="group relative flex items-center gap-5 md:gap-7 p-4 md:p-5 mb-4 rounded-2xl border border-gold/40 bg-gradient-to-r from-gold/10 via-coal/70 to-transparent gold-glow overflow-hidden hover:border-gold/70 transition-colors duration-300"
                 >
@@ -271,10 +272,10 @@ const RankSection = () => (
                     <Eye size={15} />{s.views}
                   </span>
                   <Fire size={20} weight="fill" className="relative text-blood shrink-0 animate-pulse-gold" />
-                </Link>
+                </StoryLink>
               ) : (
-                <Link
-                  to={`/truyen/${s.slug}`}
+                <StoryLink
+                  slug={s.slug}
                   data-testid={`rank-row-${s.slug}`}
                   className="group flex items-center gap-5 md:gap-6 py-4 border-b border-white/8 hover:bg-gold/[0.04] hover:pl-3 transition-[background-color,padding] duration-300 rounded-lg"
                 >
@@ -292,7 +293,7 @@ const RankSection = () => (
                     <Eye size={15} className="text-gold/60" />{s.views}
                   </span>
                   {i < 3 && <Fire size={18} weight="fill" className="text-blood shrink-0 animate-pulse-gold" />}
-                </Link>
+                </StoryLink>
               )}
             </Reveal>
           ))}
@@ -312,7 +313,7 @@ const RankSection = () => (
             </p>
             <div className="space-y-5">
               {fullStories.slice(0, 3).map((s) => (
-                <Link key={s.slug} to={`/truyen/${s.slug}`} data-testid={`full-pick-${s.slug}`} className="group flex gap-4 items-center">
+                <StoryLink key={s.slug} slug={s.slug} data-testid={`full-pick-${s.slug}`} className="group flex gap-4 items-center">
                   <span className="relative w-14 aspect-[3/4] rounded-md overflow-hidden border border-white/10 shrink-0 group-hover:border-gold/50 transition-colors">
                     <CoverArt story={s} showTitle={false} />
                   </span>
@@ -320,7 +321,7 @@ const RankSection = () => (
                     <span className="block font-display text-lg font-semibold text-bone group-hover:text-gold transition-colors leading-tight">{s.title}</span>
                     <span className="block text-xs text-ash mt-1">{s.chaptersCount} chương · Full</span>
                   </span>
-                </Link>
+                </StoryLink>
               ))}
             </div>
             <Link to="/truyen-full" data-testid="full-more-link" className="mt-7 flex items-center justify-center gap-2 py-3 rounded-full border border-gold/40 text-gold text-xs uppercase tracking-[0.2em] font-bold hover:bg-gold hover:text-obsidian transition-[background-color,color] duration-300">

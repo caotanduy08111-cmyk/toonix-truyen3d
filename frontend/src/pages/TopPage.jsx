@@ -5,6 +5,7 @@ import { Crown, Eye, Fire, Medal, Trophy } from '@phosphor-icons/react';
 import { topStories, genreName } from '../data/stories';
 import { CoverArt } from '../components/CoverArt';
 import { StoryCard } from '../components/StoryCard';
+import { StoryLink } from '../components/StoryLink';
 import { Reveal } from '../components/Reveal';
 
 const rotate = (arr, k) => [...arr.slice(k), ...arr.slice(0, k)];
@@ -20,8 +21,8 @@ const TABS = [
 const TAB_LIST = { ngay: topNgay, tuan: topTuan, thang: topThang };
 
 const MiniRankRow = ({ s, i }) => (
-  <Link
-    to={`/truyen/${s.slug}`}
+  <StoryLink
+    slug={s.slug}
     data-testid={`mini-rank-${s.slug}`}
     className="group flex items-center gap-3 py-2.5 px-1 border-b border-white/5 last:border-0 hover:bg-gold/5 rounded-md transition-colors duration-300"
   >
@@ -36,7 +37,7 @@ const MiniRankRow = ({ s, i }) => (
     <span className="flex items-center gap-1 text-[11px] text-ash shrink-0">
       <Eye size={12} className="text-gold/60" />{s.views}
     </span>
-  </Link>
+  </StoryLink>
 );
 
 const SidePanel = () => {
@@ -97,8 +98,8 @@ const PodiumCard = ({ story, rank, delay }) => {
       <p className={`font-display font-bold leading-none mb-3 ${isFirst ? 'text-4xl md:text-5xl' : 'text-2xl md:text-3xl'} ${st.label}`}>
         #Top{rank}
       </p>
-      <Link
-        to={`/truyen/${story.slug}`}
+      <StoryLink
+        slug={story.slug}
         className={`group relative block w-full aspect-[3/4] rounded-2xl overflow-hidden border transition-[transform,box-shadow,border-color] duration-400 hover:-translate-y-2 ${st.border} ${st.glow} ${st.hoverGlow} ${isFirst ? 'md:scale-[1.06]' : ''}`}
       >
         <CoverArt story={story} showTitle={false} />
@@ -112,7 +113,7 @@ const PodiumCard = ({ story, rank, delay }) => {
             <Eye size={13} className="text-gold/70" />{story.views} · <Fire size={13} weight="fill" className="text-blood" />{story.rating}
           </span>
         </span>
-      </Link>
+      </StoryLink>
     </motion.div>
   );
 };

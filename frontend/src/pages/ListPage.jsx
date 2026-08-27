@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Clock, Eye } from '@phosphor-icons/react';
 import { STORIES, byGenre, fullStories, topStories, genreName, GENRES } from '../data/stories';
 import { StoryCard } from '../components/StoryCard';
+import { StoryLink } from '../components/StoryLink';
 import { Reveal } from '../components/Reveal';
 import { getHistory } from '../lib/store';
 import { CoverArt } from '../components/CoverArt';
@@ -129,7 +130,7 @@ export default function ListPage({ kind }) {
         <div className="mt-14 max-w-4xl">
           {stories.map((s, i) => (
             <Reveal key={s.slug} delay={i * 0.04} y={24}>
-              <Link to={`/truyen/${s.slug}`} data-testid={`top-row-${s.slug}`} className="group flex items-center gap-5 md:gap-8 py-5 border-b border-white/8 hover:bg-gold/[0.04] hover:pl-3 transition-[background-color,padding] duration-300 rounded-lg">
+              <StoryLink slug={s.slug} data-testid={`top-row-${s.slug}`} className="group flex items-center gap-5 md:gap-8 py-5 border-b border-white/8 hover:bg-gold/[0.04] hover:pl-3 transition-[background-color,padding] duration-300 rounded-lg">
                 <span className={`font-display text-4xl md:text-6xl font-bold w-16 shrink-0 ${i < 3 ? 'text-gold' : 'text-stroke-faint group-hover:text-gold/60'} transition-colors duration-300`}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
@@ -141,7 +142,7 @@ export default function ListPage({ kind }) {
                   <span className="block text-xs text-ash mt-1">{s.genres.map(genreName).join(' · ')} — {s.author} — {s.status}</span>
                 </span>
                 <span className="flex items-center gap-1.5 text-sm text-ash shrink-0"><Eye size={15} className="text-gold/60" />{s.views}</span>
-              </Link>
+              </StoryLink>
             </Reveal>
           ))}
         </div>
@@ -187,7 +188,7 @@ const HistoryList = ({ history }) => {
                 <span className="absolute inset-0" style={{ background: `linear-gradient(160deg, hsl(${s.hue} 45% 18%), #0a0908)` }} />
               </span>
               <div className="flex-1 min-w-[180px]">
-                <Link to={`/truyen/${s.slug}`} className="font-display text-xl font-semibold text-bone hover:text-gold transition-colors">{s.title}</Link>
+                <StoryLink slug={s.slug} className="font-display text-xl font-semibold text-bone hover:text-gold transition-colors">{s.title}</StoryLink>
                 <p className="text-xs text-ash mt-1">Đã đọc đến chương {h.chapter} · {new Date(h.at).toLocaleDateString('vi-VN')}</p>
               </div>
               <Link to={`/doc/${s.slug}/${h.chapter}`} data-testid={`history-resume-${s.slug}`} className="px-6 py-2.5 rounded-full border border-gold/40 text-gold text-xs font-bold uppercase tracking-wider hover:bg-gold hover:text-obsidian transition-[background-color,color] duration-300">
